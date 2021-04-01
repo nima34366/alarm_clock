@@ -1,18 +1,25 @@
 #include <DS3231.h>
 DS3231  rtc(SDA, SCL);
 
-int LED = 4; // LED to indicate time
+int LED1 = 4; // LED to indicate time
+int LED2 = 5;
 
 Time t;
-int Alarm_hour = 0;
-int Alarm_min = 0;
+int Alarm1_hour = 18;
+int Alarm1_min = 0;
+
+int Alarm2_hour = 18;
+int Alarm2_min = 1;
 
 void setup() {
   
   Serial.begin(96000);
-  pinMode(LED,OUTPUT);
-  digitalWrite(LED,LOW);
   rtc.begin();
+  
+  pinMode(LED1,OUTPUT);
+  digitalWrite(LED1,LOW);
+  pinMode(LED2,OUTPUT);
+  digitalWrite(LED2,LOW);
 
   // Set time  and date
   rtc.setDOW(THURSDAY); // Day of the week
@@ -24,8 +31,11 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  if ((Alarm_hour == t.hour) && (Alarm_min == t.min){
-    digitalWrite(LED,HIGH);
+  if ((Alarm1_hour == t.hour) && (Alarm1_min == t.min)){
+    digitalWrite(LED1,HIGH);
+  }
+  else if ((Alarm2_hour == t.hour) && (Alarm2_min == t.min)){
+    digitalWrite(LED2,HIGH);
   }
   delay(1);
 }
