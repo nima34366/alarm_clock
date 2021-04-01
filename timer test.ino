@@ -37,5 +37,5 @@ if(val!=0){
   digitalWrite(led,HIGH);
   
 }
-
+val=0;
 }
