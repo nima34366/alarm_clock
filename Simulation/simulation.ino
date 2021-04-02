@@ -16,32 +16,25 @@ Keypad keypad = Keypad( makeKeymap(keys), pin_rows, pin_column, ROW_NUM, COLUMN_
 
 void setup()
 {
- for (int i=2; i<=10; i++) 
- {
-   pinMode(i, OUTPUT);
-   
- }
-  Serial.begin(9600);
+  for (int i = 2; i <= 10; i++)
+  {
+    pinMode(i, OUTPUT);
+  }
 }
 
 void loop()
 {
   char key = keypad.getKey();
- 
-     if (key != NO_KEY )
-     {
-       for (int k = 49; k<= (key); k++)
-        {
-        digitalWrite(k-47,HIGH) ;
-         Serial.println(int(key));
-        }
-       delay(1000);
-     } 
-     else
-     {
-       for (int p = 2; p<=10; p++)
-       {        
-        digitalWrite(p,LOW);
-       }
-     }
+  if (key != NO_KEY )
+  {
+    for (int k = 49; k <= key; k++)
+    {
+      digitalWrite(k - 47, HIGH) ;
+    }
+    delay(1000);
+  }
+  for (int p = 2; p <= 10; p++)
+  {
+    digitalWrite(p, LOW);
+  }
 }
