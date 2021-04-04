@@ -25,10 +25,12 @@ int snooze = 13;
 int Alarm1_hour;
 int Alarm1_min;
 
+// switch state variables
 int alarmActive = 0;
 int sa;
 int sc;
 
+// current time variables
 String t;
 int h;
 int m;
@@ -62,16 +64,18 @@ void setup() {
   pinMode(setClk,INPUT);
   pinMode(snooze,INPUT);
 
+  // set date manually 
   rtc.setDate(4,1,2021); // M:D:Y date format
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  // Get current time
   t = rtc.getTimeStr();
   h = t.substring(0,2).toInt();
   m = t.substring(3,5).toInt();
   Serial.println(t);
 
+  // if set clock button is pressed, set the time
   sc = digitalRead(setClk); // state of set clock
   if (sc == HIGH){
     Serial.println("Setting the clock");
@@ -81,8 +85,10 @@ void loop() {
     delay(1000);
   }
 
+  // if set alarm button is pressed without current alarms
   sa = digitalRead(setAlarm); // state of set alarm switch
   if (sa == HIGH && alarmActive == 0){
+    // set new alarm
     Serial.println("Setting the alarm");
     digitalWrite(setAlarmLED,HIGH);
     set_alarm();
@@ -92,16 +98,19 @@ void loop() {
     digitalWrite(alarmActiveLED,HIGH);
     delay(1000);
   }
+  // if set alarm button is pressed with a current alarm
   sa = digitalRead(setAlarm); // state of set alarm switch
   if (sa == HIGH && alarmActive == 1){
+    // delete the current alarm
     Serial.println("Deleting Alarm");
     alarmActive = 0;
     digitalWrite(alarmActiveLED,LOW);
   }
-
+  // reaching the active alarm time
   if (Alarm1_hour == h && Alarm1_min == m && alarmActive == 1){
     digitalWrite(alarm1Ring,HIGH);
     Serial.println("Alarm on");
+    // ringing until the snooze button is pressed
     while (1){
       int snz = digitalRead(snooze); // state of snooze button
       if (snz == HIGH){
@@ -116,6 +125,7 @@ void loop() {
   delay(100);
 }
 
+// Function to read input as integer
 int read_digit(){
   int n1 = digitalRead(d1);
   int n2 = digitalRead(d2);
@@ -128,10 +138,13 @@ int read_digit(){
   return number;
 }
 
+// Function to set time
 void set_time(){
   int time_h;
   int time_m;
   delay(1000);
+  
+  // Get hours
   digitalWrite(hrLED,HIGH);
   Serial.println("Enter hours <=24");
   while (1){
@@ -142,9 +155,10 @@ void set_time(){
     delay(100);
     }
   }
-  
   digitalWrite(hrLED,LOW);
   delay(1000);
+  
+  // Get minutes
   Serial.println("Enter minutes <=60");
   digitalWrite(minLED,HIGH);
   
@@ -167,11 +181,13 @@ void set_time(){
   rtc.setTime(time_h,time_m,00); // h:m:s 24 hour format
 }
 
+// Function to set an alarm
 void set_alarm(){
   int alarm_h;
   int alarm_m;
-  
   delay(1000);
+  
+  // Get hours
   Serial.println("Enter hours <=24");
   digitalWrite(hrLED,HIGH);
   while (1){
@@ -183,9 +199,10 @@ void set_alarm(){
     delay(100);
     }
   }
-  
   digitalWrite(hrLED,LOW);
   delay(1000);
+
+  // Get minutes
   Serial.println("Enter minutes <=60");
   digitalWrite(minLED,HIGH);
   
