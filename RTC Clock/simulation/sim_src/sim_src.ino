@@ -27,6 +27,7 @@ int Alarm1_min;
 
 // switch state variables
 int alarmActive = 0;
+int alarmSnooze = 0;
 int sa;
 int sc;
 
@@ -105,6 +106,7 @@ void loop() {
     Serial.println("Deleting Alarm");
     alarmActive = 0;
     digitalWrite(alarmActiveLED,LOW);
+    delay(1000);
   }
   // reaching the active alarm time
   if (Alarm1_hour == h && Alarm1_min == m && alarmActive == 1){
@@ -121,6 +123,7 @@ void loop() {
     }
     Serial.println("Alarm off");
     alarmActive = 0;
+    digitalWrite(alarmActiveLED,LOW);
   }
   delay(100);
 }
