@@ -32,9 +32,10 @@ void loop()
       digitalWrite(k - 47, HIGH) ;
     }
     delay(1000);
-  }
-  for (int p = 2; p <= 10; p++)
-  {
-    digitalWrite(p, LOW);
+
+    for (int p = 2; p <= 10; p++)
+    {
+      digitalWrite(p, LOW);
+    }
   }
 }
