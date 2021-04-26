@@ -1,4 +1,5 @@
 #include <LiquidCrystal.h>
+#include "functions.h"
 //setting pins
 LiquidCrystal lcd(12,11,2,3,4,5);
 int b1=8;
@@ -14,7 +15,6 @@ int p3val=0;
 int n3val=0;
 int n=0;
 
-
 void setup() {
   lcd.begin(16, 2);
   lcd.print(n);
@@ -26,7 +26,7 @@ void setup() {
 void loop() {
   //setting n to increase when there is a change in b1 from low to high
   n1val=digitalRead(b1);
-  if ((n1val==HIGH) && (p1val==LOW)){
+  if (buttonpress(n1val,p1val)==true){
     n=n+1;
     lcd.clear();
     lcd.print(n);
@@ -35,7 +35,7 @@ void loop() {
   
   //setting n to decrease when there is a change in b2 from low to high
   n2val=digitalRead(b2);
-  if ((n2val==HIGH) && (p2val==LOW)){
+  if (buttonpress(n2val,p2val)==true){
     n=n-1;
     lcd.clear();
     lcd.print(n);
@@ -44,7 +44,7 @@ void loop() {
   
   //setting n to 0 when there is a change in b3 from low to high
   n3val=digitalRead(b3);
-  if ((n3val==HIGH) && (p3val==LOW)){
+  if (buttonpress(n3val,p3val)==true){
     n=0;
     lcd.clear();
     lcd.print(n);
