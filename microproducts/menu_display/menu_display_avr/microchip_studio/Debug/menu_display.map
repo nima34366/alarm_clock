@@ -14,7 +14,11 @@ Discarded input sections
  .bss           0x00000000        0x0 lcd.o
  .text.lcd_data
                 0x00000000       0x14 lcd.o
+ .text.lcd_gotoxy
+                0x00000000       0x14 lcd.o
  .text.lcd_getxy
+                0x00000000        0x8 lcd.o
+ .text.lcd_home
                 0x00000000        0x8 lcd.o
  .text.lcd_puts_p
                 0x00000000       0x1e lcd.o
@@ -277,26 +281,20 @@ END GROUP
  .text.lcd_command
                 0x00000154       0x14 lcd.o
                 0x00000154                lcd_command
- .text.lcd_gotoxy
-                0x00000168       0x14 lcd.o
-                0x00000168                lcd_gotoxy
  .text.lcd_clrscr
-                0x0000017c        0x8 lcd.o
-                0x0000017c                lcd_clrscr
- .text.lcd_home
-                0x00000184        0x8 lcd.o
-                0x00000184                lcd_home
+                0x00000168        0x8 lcd.o
+                0x00000168                lcd_clrscr
  .text.lcd_putc
-                0x0000018c       0x2a lcd.o
-                0x0000018c                lcd_putc
+                0x00000170       0x2a lcd.o
+                0x00000170                lcd_putc
  .text.lcd_puts
-                0x000001b6       0x1e lcd.o
-                0x000001b6                lcd_puts
+                0x0000019a       0x1e lcd.o
+                0x0000019a                lcd_puts
  .text.lcd_init
-                0x000001d4       0x78 lcd.o
-                0x000001d4                lcd_init
- .text.main     0x0000024c       0x28 main.o
-                0x0000024c                main
+                0x000001b8       0x78 lcd.o
+                0x000001b8                lcd_init
+ .text.main     0x00000230       0x44 main.o
+                0x00000230                main
                 0x00000274                . = ALIGN (0x2)
  *(.fini9)
  .fini9         0x00000274        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
@@ -324,7 +322,7 @@ END GROUP
  *(.fini0)
                 0x00000278                _etext = .
 
-.data           0x00800100        0xc load address 0x00000278
+.data           0x00800100        0x8 load address 0x00000278
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -332,26 +330,27 @@ END GROUP
  *(.rodata)
  *(.rodata*)
  .rodata.str1.1
-                0x00800100        0xc main.o
+                0x00800100        0x7 main.o
  *(.gnu.linkonce.r*)
-                0x0080010c                . = ALIGN (0x2)
-                0x0080010c                _edata = .
-                0x0080010c                PROVIDE (__data_end, .)
+                0x00800108                . = ALIGN (0x2)
+ *fill*         0x00800107        0x1 
+                0x00800108                _edata = .
+                0x00800108                PROVIDE (__data_end, .)
 
-.bss            0x0080010c        0x0
+.bss            0x00800108        0x0
                 [!provide]                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
  *(COMMON)
                 [!provide]                PROVIDE (__bss_end, .)
                 0x00000278                __data_load_start = LOADADDR (.data)
-                0x00000284                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00000280                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x0080010c        0x0
+.noinit         0x00800108        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
  *(.noinit*)
                 [!provide]                PROVIDE (__noinit_end, .)
-                0x0080010c                _end = .
+                0x00800108                _end = .
                 [!provide]                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
@@ -427,40 +426,41 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000      0xcf7
+.debug_info     0x00000000      0xd54
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x5f4 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .debug_info    0x000005f4      0x5cf lcd.o
- .debug_info    0x00000bc3      0x134 main.o
+ .debug_info    0x00000bc3      0x191 main.o
 
-.debug_abbrev   0x00000000      0x859
+.debug_abbrev   0x00000000      0x8ce
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x5a2 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .debug_abbrev  0x000005a2      0x22b lcd.o
- .debug_abbrev  0x000007cd       0x8c main.o
+ .debug_abbrev  0x000007cd      0x101 main.o
 
-.debug_line     0x00000000      0x510
+.debug_line     0x00000000      0x600
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x134 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .debug_line    0x00000134      0x376 lcd.o
- .debug_line    0x000004aa       0x66 main.o
+ .debug_line    0x000004aa      0x156 main.o
 
 .debug_frame    0x00000000      0x164
  *(.debug_frame)
  .debug_frame   0x00000000      0x140 lcd.o
  .debug_frame   0x00000140       0x24 main.o
 
-.debug_str      0x00000000      0x44c
+.debug_str      0x00000000      0x4e1
  *(.debug_str)
  .debug_str     0x00000000      0x208 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .debug_str     0x00000208      0x233 lcd.o
                                 0x271 (size before relaxing)
- .debug_str     0x0000043b       0x11 main.o
-                                0x19e (size before relaxing)
+ .debug_str     0x0000043b       0xa6 main.o
+                                0x1dd (size before relaxing)
 
-.debug_loc      0x00000000      0x565
+.debug_loc      0x00000000      0x5ab
  *(.debug_loc)
  .debug_loc     0x00000000      0x565 lcd.o
+ .debug_loc     0x00000565       0x46 main.o
 
 .debug_macinfo
  *(.debug_macinfo)

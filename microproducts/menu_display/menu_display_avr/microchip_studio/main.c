@@ -5,20 +5,33 @@
  * Author : wickr
  */ 
 
+#ifndef F_CPU			
+#define F_CPU 1000000UL			  
+#endif
+
 #include <avr/io.h>
 #include "lcd.h"
+#include <util/delay.h>
 
 int main(void)
 {
-	lcd_init(LCD_DISP_ON_CURSOR); /*initialize lcd,display on, cursor on */
-	lcd_clrscr();             /* clear screen of lcd */
-	lcd_home();               /* bring cursor to 0,0 */
-	lcd_puts("Line1");        /* type something random */
-	lcd_gotoxy(0,1);          /* go to 2nd row 1st col */
-	lcd_puts("Line2");  /* type something random */
-    /* Replace with your application code */
+	lcd_init(LCD_DISP_ON); /*initialize lcd,display on, cursor on */
     while (1) 
     {
+		PORTB=0b0111;
+		_delay_ms(50);
+		if((PINB==0b0110)||(PINB==(0b0101))||(PINB==(0b0011)))
+		{
+			lcd_clrscr();
+			lcd_puts("ON");
+		}
+		else
+		{
+			lcd_clrscr();
+			lcd_puts("OFF");
+		}
+		
+		
     }
 }
 
