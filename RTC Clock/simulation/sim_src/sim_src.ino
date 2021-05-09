@@ -66,7 +66,7 @@ void setup() {
   pinMode(snooze,INPUT);
 
   // set date manually 
-  rtc.setDate(4,1,2021); // M:D:Y date format
+  rtc.setDate(4,8,2021); // M:D:Y date format
 }
 
 void loop() {
