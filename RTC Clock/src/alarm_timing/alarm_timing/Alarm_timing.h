@@ -9,6 +9,10 @@
 #ifndef ALARM_TIMING_H_
 #define ALARM_TIMING_H_
 
+#include <avr/io.h>
+#include <util/delay.h>
+#include <stdint.h>
+
 // LEDs
 #define LEDPort PORTD
 #define AlarmActiveLED PIND0
@@ -85,7 +89,8 @@ public:
 };
 
 // Function  prototypes
+int read_digit();
 void Alarm_timing_init();
-void Alarm_timing_set_time();
+void Alarm_timing_set_time(DS3231 rtc);
 
 #endif /* ALARM_TIMING_H_ */

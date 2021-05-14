@@ -5,7 +5,19 @@
  *  Author: Chathuni
  */ 
 
+#ifndef F_CPU
+#define F_CPU 1000000UL
+#endif
+
 #include "Alarm_timing.h"
+#include <avr/io.h>
+#include <util/delay.h>
+#include <stdint.h>
+
+#ifndef TWI_FREQ
+#define TWI_FREQ 400000L
+#endif
+
 
 #define REG_SEC		0x00
 #define REG_MIN		0x01
@@ -26,7 +38,7 @@
 #define DS3231_ADDR_W	0xD0
 #define DS3231_ADDR		0x68  
 
-#define _BV(n) (1 << n)
+/*#define _BV(n) (1 << n)*/
 #define cbi(sfr, bit) (_SFR_BYTE(sfr) &= ~_BV(bit))
 
 #define SDA PINC4
@@ -195,4 +207,163 @@ uint8_t DS3231::_encode(uint8_t value)
 {
 	uint8_t encoded = ((value / 10) << 4) + (value % 10);
 	return encoded;
+}
+
+// Class methods of Alarm
+Alarm::Alarm()
+{
+	this->hour = 0;
+	this->minute  = 0;
+	this->active  = 0;
+}
+
+// Public functions
+
+void Alarm::set()
+{
+	PORTD |= (1<<SetAlarmLED); // turning on set alarm LED
+	_delay_ms(500);
+	
+	int alarm_h;
+	int alarm_m;
+	int set_alarm_input;
+	
+	PORTD |= (1<<SetHourLED); // turning on set hour LED
+	
+	// wait until user presses set alarm button to read the hours
+	while (1)
+	{
+		set_alarm_input = PINC & (1<<SetAlarm);
+		if (set_alarm_input > 0)
+		{
+			alarm_h = read_digit();
+			break;
+		}
+		_delay_ms(100);
+	}
+	
+	PORTD &= ~(1<<SetHourLED); // turning off set hour LED
+	_delay_ms(500);
+	
+	PORTD |= (1<<SetMinuteLED); // turning on set minute LED
+	
+	// wait until user presses set alarm button to read the minutes
+	while (1)
+	{
+		set_alarm_input = PINC & (1<<SetAlarm);
+		if (set_alarm_input > 0)
+		{
+			alarm_m = read_digit();
+			break;
+		}
+		_delay_ms(100);
+	}
+	
+	PORTD &= ~(1<<SetMinuteLED); // turning off set minute LED
+	
+	// setting the alarm and activating
+	this->hour = alarm_h;
+	this->minute = alarm_m;
+	this->active = 1;
+	
+	PORTD |= (1<<AlarmActiveLED); // turning on active alarm indicative LED
+	_delay_ms(500);
+}
+
+void Alarm::del()
+{
+	this->active = 0;
+	PORTD &= ~(1<<AlarmActiveLED); // turning off active alarm indicative LED
+	_delay_ms(500);
+}
+
+void Alarm::ring()
+{
+	PORTD |= (1<<AlarmRingLED); // turning on alarm ring indicative LED
+	
+	int snooze_input = 0;
+	
+	// wait for the button press of snooze to stop the ringing
+	while (1)
+	{
+		snooze_input = PINC & (1<<Snooze); // reading the state of snooze button
+		if (snooze_input > 0)
+		{
+			PORTD &= ~(1<<AlarmRingLED); // turning off alarm ring indicative LED
+			break;
+		}
+		_delay_ms(100);
+	}
+	
+	this->active = 0;
+	PORTD &= ~(1<<AlarmActiveLED); // turning off active alarm indicative LED
+}
+
+// Common function definitions
+
+int read_digit()
+{
+	int bit_input = PINB;
+	int number = bit_input & (00111111); // remove bit 6 and 7
+	return number;
+}
+
+void Alarm_timing_init()
+{
+	// setting pins as input/output
+	
+	DDRD = 0xff;	// PortD contains only the LEDs, setting them as outputs
+	PORTD = 0x00;	// turning off the LEDs as initial conditions
+	
+	DDRB = 0x00;	// PortB contains only the inputs of bit pattern
+	
+	DDRC &= ~((1<<SetTime) | (1<<SetAlarm) | (1<<Snooze));
+}
+
+void Alarm_timing_set_time(DS3231 rtc)
+{
+	PORTD |= (1<<SetTimeLED); // turning on set time LED
+	_delay_ms(500);
+	
+	int time_h;
+	int time_m;
+	int set_time_input;
+	
+	PORTD |= (1<<SetHourLED); // turning on set hour LED
+	
+	// wait until user presses set time button to read the hours
+	while (1)
+	{
+		set_time_input = PINC & (1<<SetTime);
+		if (set_time_input > 0)
+		{
+			time_h = read_digit();
+			break;
+		}
+		_delay_ms(100);
+	}
+	
+	PORTD &= ~(1<<SetHourLED); // turning off set hour LED
+	_delay_ms(500);
+	
+	PORTD |= (1<<SetMinuteLED); // turning on set minute LED
+	
+	// wait until user presses set time button to read the minutes
+	while (1)
+	{
+		set_time_input = PINC & (1<<SetTime);
+		if (set_time_input > 0)
+		{
+			time_m = read_digit();
+			break;
+		}
+		_delay_ms(100);
+	}
+	
+	PORTD &= ~(1<<SetMinuteLED); // turning off set minute LED
+	
+	//setting the time
+	rtc.setTime(time_h,time_m,0);
+	
+	_delay_ms(500);
 }
