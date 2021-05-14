@@ -5,14 +5,16 @@
  * Author : Chathuni
  */ 
 
-#include <avr/io.h>
-#include <util/delay.h>
-
-#include "Alarm_timing.h"		// Local Library
 
 #ifndef F_CPU
 #define F_CPU 1000000UL
 #endif
+
+#include <avr/io.h>
+#include <util/delay.h>
+#include <stdint.h>
+
+#include "Alarm_timing.h"		// Local Library
 
 #define SDA PINC4
 #define SCL PINC5
@@ -25,9 +27,8 @@ int main(void)
 	// function from library Alarm_timing
 	int set_time_input = 0;
 	int set_alarm_input = 0;
-	int snooze_input = 0;
 
-	Alarm alarm1();
+	Alarm alarm1;
 	RTC.begin();
 	
 	Alarm_timing_init();
@@ -43,7 +44,7 @@ int main(void)
 		
 		// set time
 		set_time_input = PINC & (1<<SetTime); // status of the set time button; 0 -> not pressed , otherwise -> pressed
-		if (set_time_input > 0)	Alarm_timing_set_time();	// the button is pressed
+		if (set_time_input > 0)	Alarm_timing_set_time(RTC);	// the button is pressed
 		
 		
 		// set new alarm
@@ -67,6 +68,8 @@ int main(void)
 		{
 			alarm1.ring();
 		}
+		
+		_delay_ms(100);
 		
     }
 	return 0;
