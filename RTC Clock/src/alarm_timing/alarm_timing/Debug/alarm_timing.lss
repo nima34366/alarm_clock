@@ -15,19 +15,19 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   5 .debug_aranges 000000e0  00000000  00000000  00000784  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00001969  00000000  00000000  00000864  2**0
+  6 .debug_info   0000196c  00000000  00000000  00000864  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00000bca  00000000  00000000  000021cd  2**0
+  7 .debug_abbrev 00000bd9  00000000  00000000  000021d0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00000846  00000000  00000000  00002d97  2**0
+  8 .debug_line   00000852  00000000  00000000  00002da9  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  000001f8  00000000  00000000  000035e0  2**2
+  9 .debug_frame  000001f8  00000000  00000000  000035fc  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00000793  00000000  00000000  000037d8  2**0
+ 10 .debug_str    00000793  00000000  00000000  000037f4  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000a77  00000000  00000000  00003f6b  2**0
+ 11 .debug_loc    00000a3a  00000000  00000000  00003f87  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 000000c0  00000000  00000000  000049e2  2**0
+ 12 .debug_ranges 000000c0  00000000  00000000  000049c1  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -96,7 +96,7 @@ Disassembly of section .text:
   96:	c4 33       	cpi	r28, 0x34	; 52
   98:	d1 07       	cpc	r29, r17
   9a:	c9 f7       	brne	.-14     	; 0x8e <__do_global_ctors+0x8>
-  9c:	0e 94 d5 02 	call	0x5aa	; 0x5aa <main>
+  9c:	0e 94 da 02 	call	0x5b4	; 0x5b4 <main>
   a0:	0c 94 4e 03 	jmp	0x69c	; 0x69c <_exit>
 
 000000a4 <__bad_interrupt>:
@@ -559,7 +559,7 @@ Alarm::Alarm()
  3a6:	08 95       	ret
 
 000003a8 <_ZN5Alarm3delEv>:
-	_delay_ms(500);
+	
 }
 
 void Alarm::del()
@@ -643,456 +643,459 @@ int read_digit()
 {
 	int bit_input = PINB;
  3f4:	83 b1       	in	r24, 0x03	; 3
- 3f6:	90 e0       	ldi	r25, 0x00	; 0
-	int number = bit_input & (00111111); // remove bit 6 and 7
+	int number = bit_input & (0b00111111); // remove bit 6 and 7
+ 3f6:	8f 73       	andi	r24, 0x3F	; 63
 	return number;
 }
- 3f8:	89 74       	andi	r24, 0x49	; 73
- 3fa:	92 79       	andi	r25, 0x92	; 146
- 3fc:	08 95       	ret
+ 3f8:	90 e0       	ldi	r25, 0x00	; 0
+ 3fa:	08 95       	ret
 
-000003fe <_ZN5Alarm3setEv>:
+000003fc <_ZN5Alarm3setEv>:
 }
 
 // Public functions
 
 void Alarm::set()
 {
- 3fe:	0f 93       	push	r16
- 400:	1f 93       	push	r17
- 402:	cf 93       	push	r28
- 404:	df 93       	push	r29
- 406:	ec 01       	movw	r28, r24
+ 3fc:	0f 93       	push	r16
+ 3fe:	1f 93       	push	r17
+ 400:	cf 93       	push	r28
+ 402:	df 93       	push	r29
+ 404:	ec 01       	movw	r28, r24
 	PORTD |= (1<<SetAlarmLED); // turning on set alarm LED
- 408:	8b b1       	in	r24, 0x0b	; 11
- 40a:	80 61       	ori	r24, 0x10	; 16
- 40c:	8b b9       	out	0x0b, r24	; 11
- 40e:	2f e9       	ldi	r18, 0x9F	; 159
- 410:	86 e8       	ldi	r24, 0x86	; 134
- 412:	91 e0       	ldi	r25, 0x01	; 1
- 414:	21 50       	subi	r18, 0x01	; 1
- 416:	80 40       	sbci	r24, 0x00	; 0
- 418:	90 40       	sbci	r25, 0x00	; 0
- 41a:	e1 f7       	brne	.-8      	; 0x414 <__EEPROM_REGION_LENGTH__+0x14>
- 41c:	00 c0       	rjmp	.+0      	; 0x41e <__EEPROM_REGION_LENGTH__+0x1e>
- 41e:	00 00       	nop
+ 406:	8b b1       	in	r24, 0x0b	; 11
+ 408:	88 60       	ori	r24, 0x08	; 8
+ 40a:	8b b9       	out	0x0b, r24	; 11
+ 40c:	2f e9       	ldi	r18, 0x9F	; 159
+ 40e:	86 e8       	ldi	r24, 0x86	; 134
+ 410:	91 e0       	ldi	r25, 0x01	; 1
+ 412:	21 50       	subi	r18, 0x01	; 1
+ 414:	80 40       	sbci	r24, 0x00	; 0
+ 416:	90 40       	sbci	r25, 0x00	; 0
+ 418:	e1 f7       	brne	.-8      	; 0x412 <__EEPROM_REGION_LENGTH__+0x12>
+ 41a:	00 c0       	rjmp	.+0      	; 0x41c <__EEPROM_REGION_LENGTH__+0x1c>
+ 41c:	00 00       	nop
 	
 	int alarm_h;
 	int alarm_m;
 	int set_alarm_input;
 	
 	PORTD |= (1<<SetHourLED); // turning on set hour LED
- 420:	8b b1       	in	r24, 0x0b	; 11
- 422:	80 64       	ori	r24, 0x40	; 64
- 424:	8b b9       	out	0x0b, r24	; 11
+ 41e:	8b b1       	in	r24, 0x0b	; 11
+ 420:	80 61       	ori	r24, 0x10	; 16
+ 422:	8b b9       	out	0x0b, r24	; 11
 	
 	// wait until user presses set alarm button to read the hours
 	while (1)
 	{
 		set_alarm_input = PINC & (1<<SetAlarm);
 		if (set_alarm_input > 0)
- 426:	31 9b       	sbis	0x06, 1	; 6
- 428:	13 c0       	rjmp	.+38     	; 0x450 <__EEPROM_REGION_LENGTH__+0x50>
+ 424:	31 9b       	sbis	0x06, 1	; 6
+ 426:	13 c0       	rjmp	.+38     	; 0x44e <__EEPROM_REGION_LENGTH__+0x4e>
 		{
 			alarm_h = read_digit();
- 42a:	0e 94 fa 01 	call	0x3f4	; 0x3f4 <_Z10read_digitv>
- 42e:	8c 01       	movw	r16, r24
+ 428:	0e 94 fa 01 	call	0x3f4	; 0x3f4 <_Z10read_digitv>
+ 42c:	8c 01       	movw	r16, r24
 			break;
 		}
 		_delay_ms(100);
 	}
 	
 	PORTD &= ~(1<<SetHourLED); // turning off set hour LED
- 430:	8b b1       	in	r24, 0x0b	; 11
- 432:	8f 7b       	andi	r24, 0xBF	; 191
- 434:	8b b9       	out	0x0b, r24	; 11
- 436:	2f e9       	ldi	r18, 0x9F	; 159
- 438:	86 e8       	ldi	r24, 0x86	; 134
- 43a:	91 e0       	ldi	r25, 0x01	; 1
- 43c:	21 50       	subi	r18, 0x01	; 1
- 43e:	80 40       	sbci	r24, 0x00	; 0
- 440:	90 40       	sbci	r25, 0x00	; 0
- 442:	e1 f7       	brne	.-8      	; 0x43c <__EEPROM_REGION_LENGTH__+0x3c>
- 444:	00 c0       	rjmp	.+0      	; 0x446 <__EEPROM_REGION_LENGTH__+0x46>
- 446:	00 00       	nop
+ 42e:	8b b1       	in	r24, 0x0b	; 11
+ 430:	8f 7e       	andi	r24, 0xEF	; 239
+ 432:	8b b9       	out	0x0b, r24	; 11
+ 434:	2f e9       	ldi	r18, 0x9F	; 159
+ 436:	86 e8       	ldi	r24, 0x86	; 134
+ 438:	91 e0       	ldi	r25, 0x01	; 1
+ 43a:	21 50       	subi	r18, 0x01	; 1
+ 43c:	80 40       	sbci	r24, 0x00	; 0
+ 43e:	90 40       	sbci	r25, 0x00	; 0
+ 440:	e1 f7       	brne	.-8      	; 0x43a <__EEPROM_REGION_LENGTH__+0x3a>
+ 442:	00 c0       	rjmp	.+0      	; 0x444 <__EEPROM_REGION_LENGTH__+0x44>
+ 444:	00 00       	nop
 	_delay_ms(500);
 	
 	PORTD |= (1<<SetMinuteLED); // turning on set minute LED
- 448:	8b b1       	in	r24, 0x0b	; 11
- 44a:	81 60       	ori	r24, 0x01	; 1
- 44c:	8b b9       	out	0x0b, r24	; 11
- 44e:	07 c0       	rjmp	.+14     	; 0x45e <__EEPROM_REGION_LENGTH__+0x5e>
- 450:	87 ea       	ldi	r24, 0xA7	; 167
- 452:	91 e6       	ldi	r25, 0x61	; 97
- 454:	01 97       	sbiw	r24, 0x01	; 1
- 456:	f1 f7       	brne	.-4      	; 0x454 <__EEPROM_REGION_LENGTH__+0x54>
- 458:	00 c0       	rjmp	.+0      	; 0x45a <__EEPROM_REGION_LENGTH__+0x5a>
- 45a:	00 00       	nop
- 45c:	e4 cf       	rjmp	.-56     	; 0x426 <__EEPROM_REGION_LENGTH__+0x26>
+ 446:	8b b1       	in	r24, 0x0b	; 11
+ 448:	80 62       	ori	r24, 0x20	; 32
+ 44a:	8b b9       	out	0x0b, r24	; 11
+ 44c:	07 c0       	rjmp	.+14     	; 0x45c <__EEPROM_REGION_LENGTH__+0x5c>
+ 44e:	87 ea       	ldi	r24, 0xA7	; 167
+ 450:	91 e6       	ldi	r25, 0x61	; 97
+ 452:	01 97       	sbiw	r24, 0x01	; 1
+ 454:	f1 f7       	brne	.-4      	; 0x452 <__EEPROM_REGION_LENGTH__+0x52>
+ 456:	00 c0       	rjmp	.+0      	; 0x458 <__EEPROM_REGION_LENGTH__+0x58>
+ 458:	00 00       	nop
+ 45a:	e4 cf       	rjmp	.-56     	; 0x424 <__EEPROM_REGION_LENGTH__+0x24>
 	
 	// wait until user presses set alarm button to read the minutes
 	while (1)
 	{
 		set_alarm_input = PINC & (1<<SetAlarm);
 		if (set_alarm_input > 0)
- 45e:	31 9b       	sbis	0x06, 1	; 6
- 460:	1a c0       	rjmp	.+52     	; 0x496 <__EEPROM_REGION_LENGTH__+0x96>
+ 45c:	31 9b       	sbis	0x06, 1	; 6
+ 45e:	1d c0       	rjmp	.+58     	; 0x49a <__EEPROM_REGION_LENGTH__+0x9a>
 		{
 			alarm_m = read_digit();
- 462:	0e 94 fa 01 	call	0x3f4	; 0x3f4 <_Z10read_digitv>
+ 460:	0e 94 fa 01 	call	0x3f4	; 0x3f4 <_Z10read_digitv>
 			break;
 		}
 		_delay_ms(100);
 	}
 	
 	PORTD &= ~(1<<SetMinuteLED); // turning off set minute LED
- 466:	2b b1       	in	r18, 0x0b	; 11
- 468:	2e 7f       	andi	r18, 0xFE	; 254
- 46a:	2b b9       	out	0x0b, r18	; 11
+ 464:	2b b1       	in	r18, 0x0b	; 11
+ 466:	2f 7d       	andi	r18, 0xDF	; 223
+ 468:	2b b9       	out	0x0b, r18	; 11
 	
 	// setting the alarm and activating
 	this->hour = alarm_h;
- 46c:	19 83       	std	Y+1, r17	; 0x01
- 46e:	08 83       	st	Y, r16
+ 46a:	19 83       	std	Y+1, r17	; 0x01
+ 46c:	08 83       	st	Y, r16
 	this->minute = alarm_m;
- 470:	9b 83       	std	Y+3, r25	; 0x03
- 472:	8a 83       	std	Y+2, r24	; 0x02
+ 46e:	9b 83       	std	Y+3, r25	; 0x03
+ 470:	8a 83       	std	Y+2, r24	; 0x02
 	this->active = 1;
- 474:	81 e0       	ldi	r24, 0x01	; 1
- 476:	90 e0       	ldi	r25, 0x00	; 0
- 478:	9d 83       	std	Y+5, r25	; 0x05
- 47a:	8c 83       	std	Y+4, r24	; 0x04
+ 472:	81 e0       	ldi	r24, 0x01	; 1
+ 474:	90 e0       	ldi	r25, 0x00	; 0
+ 476:	9d 83       	std	Y+5, r25	; 0x05
+ 478:	8c 83       	std	Y+4, r24	; 0x04
 	
 	PORTD |= (1<<AlarmActiveLED); // turning on active alarm indicative LED
- 47c:	8b b1       	in	r24, 0x0b	; 11
- 47e:	81 60       	ori	r24, 0x01	; 1
- 480:	8b b9       	out	0x0b, r24	; 11
- 482:	9f e9       	ldi	r25, 0x9F	; 159
- 484:	26 e8       	ldi	r18, 0x86	; 134
- 486:	81 e0       	ldi	r24, 0x01	; 1
- 488:	91 50       	subi	r25, 0x01	; 1
- 48a:	20 40       	sbci	r18, 0x00	; 0
- 48c:	80 40       	sbci	r24, 0x00	; 0
- 48e:	e1 f7       	brne	.-8      	; 0x488 <__EEPROM_REGION_LENGTH__+0x88>
- 490:	00 c0       	rjmp	.+0      	; 0x492 <__EEPROM_REGION_LENGTH__+0x92>
- 492:	00 00       	nop
+ 47a:	8b b1       	in	r24, 0x0b	; 11
+ 47c:	81 60       	ori	r24, 0x01	; 1
+ 47e:	8b b9       	out	0x0b, r24	; 11
+	PORTD &= ~(1<<SetAlarmLED); // turning off set alarm LED
+ 480:	8b b1       	in	r24, 0x0b	; 11
+ 482:	87 7f       	andi	r24, 0xF7	; 247
+ 484:	8b b9       	out	0x0b, r24	; 11
+ 486:	9f e9       	ldi	r25, 0x9F	; 159
+ 488:	26 e8       	ldi	r18, 0x86	; 134
+ 48a:	81 e0       	ldi	r24, 0x01	; 1
+ 48c:	91 50       	subi	r25, 0x01	; 1
+ 48e:	20 40       	sbci	r18, 0x00	; 0
+ 490:	80 40       	sbci	r24, 0x00	; 0
+ 492:	e1 f7       	brne	.-8      	; 0x48c <__EEPROM_REGION_LENGTH__+0x8c>
+ 494:	00 c0       	rjmp	.+0      	; 0x496 <__EEPROM_REGION_LENGTH__+0x96>
+ 496:	00 00       	nop
 	_delay_ms(500);
+	
 }
- 494:	07 c0       	rjmp	.+14     	; 0x4a4 <__EEPROM_REGION_LENGTH__+0xa4>
- 496:	87 ea       	ldi	r24, 0xA7	; 167
- 498:	91 e6       	ldi	r25, 0x61	; 97
- 49a:	01 97       	sbiw	r24, 0x01	; 1
- 49c:	f1 f7       	brne	.-4      	; 0x49a <__EEPROM_REGION_LENGTH__+0x9a>
- 49e:	00 c0       	rjmp	.+0      	; 0x4a0 <__EEPROM_REGION_LENGTH__+0xa0>
- 4a0:	00 00       	nop
- 4a2:	dd cf       	rjmp	.-70     	; 0x45e <__EEPROM_REGION_LENGTH__+0x5e>
- 4a4:	df 91       	pop	r29
- 4a6:	cf 91       	pop	r28
- 4a8:	1f 91       	pop	r17
- 4aa:	0f 91       	pop	r16
- 4ac:	08 95       	ret
+ 498:	07 c0       	rjmp	.+14     	; 0x4a8 <__EEPROM_REGION_LENGTH__+0xa8>
+ 49a:	87 ea       	ldi	r24, 0xA7	; 167
+ 49c:	91 e6       	ldi	r25, 0x61	; 97
+ 49e:	01 97       	sbiw	r24, 0x01	; 1
+ 4a0:	f1 f7       	brne	.-4      	; 0x49e <__EEPROM_REGION_LENGTH__+0x9e>
+ 4a2:	00 c0       	rjmp	.+0      	; 0x4a4 <__EEPROM_REGION_LENGTH__+0xa4>
+ 4a4:	00 00       	nop
+ 4a6:	da cf       	rjmp	.-76     	; 0x45c <__EEPROM_REGION_LENGTH__+0x5c>
+ 4a8:	df 91       	pop	r29
+ 4aa:	cf 91       	pop	r28
+ 4ac:	1f 91       	pop	r17
+ 4ae:	0f 91       	pop	r16
+ 4b0:	08 95       	ret
 
-000004ae <_Z17Alarm_timing_initv>:
+000004b2 <_Z17Alarm_timing_initv>:
 
 void Alarm_timing_init()
 {
 	// setting pins as input/output
 	
 	DDRD = 0xff;	// PortD contains only the LEDs, setting them as outputs
- 4ae:	8f ef       	ldi	r24, 0xFF	; 255
- 4b0:	8a b9       	out	0x0a, r24	; 10
+ 4b2:	8f ef       	ldi	r24, 0xFF	; 255
+ 4b4:	8a b9       	out	0x0a, r24	; 10
 	PORTD = 0x00;	// turning off the LEDs as initial conditions
- 4b2:	1b b8       	out	0x0b, r1	; 11
+ 4b6:	1b b8       	out	0x0b, r1	; 11
 	
 	DDRB = 0x00;	// PortB contains only the inputs of bit pattern
- 4b4:	14 b8       	out	0x04, r1	; 4
+ 4b8:	14 b8       	out	0x04, r1	; 4
 	
 	DDRC &= ~((1<<SetTime) | (1<<SetAlarm) | (1<<Snooze));
- 4b6:	87 b1       	in	r24, 0x07	; 7
- 4b8:	88 7f       	andi	r24, 0xF8	; 248
- 4ba:	87 b9       	out	0x07, r24	; 7
- 4bc:	08 95       	ret
+ 4ba:	87 b1       	in	r24, 0x07	; 7
+ 4bc:	88 7f       	andi	r24, 0xF8	; 248
+ 4be:	87 b9       	out	0x07, r24	; 7
+ 4c0:	08 95       	ret
 
-000004be <_Z21Alarm_timing_set_time6DS3231>:
+000004c2 <_Z21Alarm_timing_set_time6DS3231>:
 }
 
 void Alarm_timing_set_time(DS3231 rtc)
 {
- 4be:	0f 93       	push	r16
- 4c0:	1f 93       	push	r17
- 4c2:	cf 93       	push	r28
- 4c4:	df 93       	push	r29
- 4c6:	cd b7       	in	r28, 0x3d	; 61
- 4c8:	de b7       	in	r29, 0x3e	; 62
- 4ca:	29 97       	sbiw	r28, 0x09	; 9
- 4cc:	0f b6       	in	r0, 0x3f	; 63
- 4ce:	f8 94       	cli
- 4d0:	de bf       	out	0x3e, r29	; 62
- 4d2:	0f be       	out	0x3f, r0	; 63
- 4d4:	cd bf       	out	0x3d, r28	; 61
- 4d6:	09 83       	std	Y+1, r16	; 0x01
- 4d8:	1a 83       	std	Y+2, r17	; 0x02
- 4da:	2b 83       	std	Y+3, r18	; 0x03
- 4dc:	3c 83       	std	Y+4, r19	; 0x04
- 4de:	4d 83       	std	Y+5, r20	; 0x05
- 4e0:	5e 83       	std	Y+6, r21	; 0x06
- 4e2:	6f 83       	std	Y+7, r22	; 0x07
- 4e4:	78 87       	std	Y+8, r23	; 0x08
- 4e6:	89 87       	std	Y+9, r24	; 0x09
+ 4c2:	0f 93       	push	r16
+ 4c4:	1f 93       	push	r17
+ 4c6:	cf 93       	push	r28
+ 4c8:	df 93       	push	r29
+ 4ca:	cd b7       	in	r28, 0x3d	; 61
+ 4cc:	de b7       	in	r29, 0x3e	; 62
+ 4ce:	29 97       	sbiw	r28, 0x09	; 9
+ 4d0:	0f b6       	in	r0, 0x3f	; 63
+ 4d2:	f8 94       	cli
+ 4d4:	de bf       	out	0x3e, r29	; 62
+ 4d6:	0f be       	out	0x3f, r0	; 63
+ 4d8:	cd bf       	out	0x3d, r28	; 61
+ 4da:	09 83       	std	Y+1, r16	; 0x01
+ 4dc:	1a 83       	std	Y+2, r17	; 0x02
+ 4de:	2b 83       	std	Y+3, r18	; 0x03
+ 4e0:	3c 83       	std	Y+4, r19	; 0x04
+ 4e2:	4d 83       	std	Y+5, r20	; 0x05
+ 4e4:	5e 83       	std	Y+6, r21	; 0x06
+ 4e6:	6f 83       	std	Y+7, r22	; 0x07
+ 4e8:	78 87       	std	Y+8, r23	; 0x08
+ 4ea:	89 87       	std	Y+9, r24	; 0x09
 	PORTD |= (1<<SetTimeLED); // turning on set time LED
- 4e8:	8b b1       	in	r24, 0x0b	; 11
- 4ea:	88 60       	ori	r24, 0x08	; 8
- 4ec:	8b b9       	out	0x0b, r24	; 11
- 4ee:	2f e9       	ldi	r18, 0x9F	; 159
- 4f0:	86 e8       	ldi	r24, 0x86	; 134
- 4f2:	91 e0       	ldi	r25, 0x01	; 1
- 4f4:	21 50       	subi	r18, 0x01	; 1
- 4f6:	80 40       	sbci	r24, 0x00	; 0
- 4f8:	90 40       	sbci	r25, 0x00	; 0
- 4fa:	e1 f7       	brne	.-8      	; 0x4f4 <_Z21Alarm_timing_set_time6DS3231+0x36>
- 4fc:	00 c0       	rjmp	.+0      	; 0x4fe <_Z21Alarm_timing_set_time6DS3231+0x40>
- 4fe:	00 00       	nop
+ 4ec:	8b b1       	in	r24, 0x0b	; 11
+ 4ee:	84 60       	ori	r24, 0x04	; 4
+ 4f0:	8b b9       	out	0x0b, r24	; 11
+ 4f2:	2f e9       	ldi	r18, 0x9F	; 159
+ 4f4:	86 e8       	ldi	r24, 0x86	; 134
+ 4f6:	91 e0       	ldi	r25, 0x01	; 1
+ 4f8:	21 50       	subi	r18, 0x01	; 1
+ 4fa:	80 40       	sbci	r24, 0x00	; 0
+ 4fc:	90 40       	sbci	r25, 0x00	; 0
+ 4fe:	e1 f7       	brne	.-8      	; 0x4f8 <_Z21Alarm_timing_set_time6DS3231+0x36>
+ 500:	00 c0       	rjmp	.+0      	; 0x502 <_Z21Alarm_timing_set_time6DS3231+0x40>
+ 502:	00 00       	nop
 	
 	int time_h;
 	int time_m;
 	int set_time_input;
 	
 	PORTD |= (1<<SetHourLED); // turning on set hour LED
- 500:	8b b1       	in	r24, 0x0b	; 11
- 502:	80 64       	ori	r24, 0x40	; 64
- 504:	8b b9       	out	0x0b, r24	; 11
+ 504:	8b b1       	in	r24, 0x0b	; 11
+ 506:	80 61       	ori	r24, 0x10	; 16
+ 508:	8b b9       	out	0x0b, r24	; 11
 	
 	// wait until user presses set time button to read the hours
 	while (1)
 	{
 		set_time_input = PINC & (1<<SetTime);
 		if (set_time_input > 0)
- 506:	30 9b       	sbis	0x06, 0	; 6
- 508:	13 c0       	rjmp	.+38     	; 0x530 <_Z21Alarm_timing_set_time6DS3231+0x72>
+ 50a:	30 9b       	sbis	0x06, 0	; 6
+ 50c:	13 c0       	rjmp	.+38     	; 0x534 <_Z21Alarm_timing_set_time6DS3231+0x72>
 		{
 			time_h = read_digit();
- 50a:	0e 94 fa 01 	call	0x3f4	; 0x3f4 <_Z10read_digitv>
- 50e:	18 2f       	mov	r17, r24
+ 50e:	0e 94 fa 01 	call	0x3f4	; 0x3f4 <_Z10read_digitv>
+ 512:	18 2f       	mov	r17, r24
 			break;
 		}
 		_delay_ms(100);
 	}
 	
 	PORTD &= ~(1<<SetHourLED); // turning off set hour LED
- 510:	8b b1       	in	r24, 0x0b	; 11
- 512:	8f 7b       	andi	r24, 0xBF	; 191
- 514:	8b b9       	out	0x0b, r24	; 11
- 516:	2f e9       	ldi	r18, 0x9F	; 159
- 518:	86 e8       	ldi	r24, 0x86	; 134
- 51a:	91 e0       	ldi	r25, 0x01	; 1
- 51c:	21 50       	subi	r18, 0x01	; 1
- 51e:	80 40       	sbci	r24, 0x00	; 0
- 520:	90 40       	sbci	r25, 0x00	; 0
- 522:	e1 f7       	brne	.-8      	; 0x51c <_Z21Alarm_timing_set_time6DS3231+0x5e>
- 524:	00 c0       	rjmp	.+0      	; 0x526 <_Z21Alarm_timing_set_time6DS3231+0x68>
- 526:	00 00       	nop
+ 514:	8b b1       	in	r24, 0x0b	; 11
+ 516:	8f 7e       	andi	r24, 0xEF	; 239
+ 518:	8b b9       	out	0x0b, r24	; 11
+ 51a:	2f e9       	ldi	r18, 0x9F	; 159
+ 51c:	86 e8       	ldi	r24, 0x86	; 134
+ 51e:	91 e0       	ldi	r25, 0x01	; 1
+ 520:	21 50       	subi	r18, 0x01	; 1
+ 522:	80 40       	sbci	r24, 0x00	; 0
+ 524:	90 40       	sbci	r25, 0x00	; 0
+ 526:	e1 f7       	brne	.-8      	; 0x520 <_Z21Alarm_timing_set_time6DS3231+0x5e>
+ 528:	00 c0       	rjmp	.+0      	; 0x52a <_Z21Alarm_timing_set_time6DS3231+0x68>
+ 52a:	00 00       	nop
 	_delay_ms(500);
 	
 	PORTD |= (1<<SetMinuteLED); // turning on set minute LED
- 528:	8b b1       	in	r24, 0x0b	; 11
- 52a:	81 60       	ori	r24, 0x01	; 1
- 52c:	8b b9       	out	0x0b, r24	; 11
- 52e:	07 c0       	rjmp	.+14     	; 0x53e <_Z21Alarm_timing_set_time6DS3231+0x80>
- 530:	87 ea       	ldi	r24, 0xA7	; 167
- 532:	91 e6       	ldi	r25, 0x61	; 97
- 534:	01 97       	sbiw	r24, 0x01	; 1
- 536:	f1 f7       	brne	.-4      	; 0x534 <_Z21Alarm_timing_set_time6DS3231+0x76>
- 538:	00 c0       	rjmp	.+0      	; 0x53a <_Z21Alarm_timing_set_time6DS3231+0x7c>
- 53a:	00 00       	nop
- 53c:	e4 cf       	rjmp	.-56     	; 0x506 <_Z21Alarm_timing_set_time6DS3231+0x48>
+ 52c:	8b b1       	in	r24, 0x0b	; 11
+ 52e:	80 62       	ori	r24, 0x20	; 32
+ 530:	8b b9       	out	0x0b, r24	; 11
+ 532:	07 c0       	rjmp	.+14     	; 0x542 <_Z21Alarm_timing_set_time6DS3231+0x80>
+ 534:	87 ea       	ldi	r24, 0xA7	; 167
+ 536:	91 e6       	ldi	r25, 0x61	; 97
+ 538:	01 97       	sbiw	r24, 0x01	; 1
+ 53a:	f1 f7       	brne	.-4      	; 0x538 <_Z21Alarm_timing_set_time6DS3231+0x76>
+ 53c:	00 c0       	rjmp	.+0      	; 0x53e <_Z21Alarm_timing_set_time6DS3231+0x7c>
+ 53e:	00 00       	nop
+ 540:	e4 cf       	rjmp	.-56     	; 0x50a <_Z21Alarm_timing_set_time6DS3231+0x48>
 	
 	// wait until user presses set time button to read the minutes
 	while (1)
 	{
 		set_time_input = PINC & (1<<SetTime);
 		if (set_time_input > 0)
- 53e:	30 9b       	sbis	0x06, 0	; 6
- 540:	16 c0       	rjmp	.+44     	; 0x56e <_Z21Alarm_timing_set_time6DS3231+0xb0>
+ 542:	30 9b       	sbis	0x06, 0	; 6
+ 544:	19 c0       	rjmp	.+50     	; 0x578 <_Z21Alarm_timing_set_time6DS3231+0xb6>
 		{
 			time_m = read_digit();
- 542:	0e 94 fa 01 	call	0x3f4	; 0x3f4 <_Z10read_digitv>
-			break;
+ 546:	0e 94 fa 01 	call	0x3f4	; 0x3f4 <_Z10read_digitv>
 		}
 		_delay_ms(100);
 	}
 	
-	PORTD &= ~(1<<SetMinuteLED); // turning off set minute LED
- 546:	9b b1       	in	r25, 0x0b	; 11
- 548:	9e 7f       	andi	r25, 0xFE	; 254
- 54a:	9b b9       	out	0x0b, r25	; 11
-	
 	//setting the time
 	rtc.setTime(time_h,time_m,0);
- 54c:	20 e0       	ldi	r18, 0x00	; 0
- 54e:	48 2f       	mov	r20, r24
- 550:	61 2f       	mov	r22, r17
- 552:	ce 01       	movw	r24, r28
- 554:	01 96       	adiw	r24, 0x01	; 1
- 556:	0e 94 a1 01 	call	0x342	; 0x342 <_ZN6DS32317setTimeEhhh>
- 55a:	9f e9       	ldi	r25, 0x9F	; 159
- 55c:	26 e8       	ldi	r18, 0x86	; 134
- 55e:	81 e0       	ldi	r24, 0x01	; 1
- 560:	91 50       	subi	r25, 0x01	; 1
- 562:	20 40       	sbci	r18, 0x00	; 0
- 564:	80 40       	sbci	r24, 0x00	; 0
- 566:	e1 f7       	brne	.-8      	; 0x560 <_Z21Alarm_timing_set_time6DS3231+0xa2>
- 568:	00 c0       	rjmp	.+0      	; 0x56a <_Z21Alarm_timing_set_time6DS3231+0xac>
- 56a:	00 00       	nop
+ 54a:	20 e0       	ldi	r18, 0x00	; 0
+ 54c:	48 2f       	mov	r20, r24
+ 54e:	61 2f       	mov	r22, r17
+ 550:	ce 01       	movw	r24, r28
+ 552:	01 96       	adiw	r24, 0x01	; 1
+ 554:	0e 94 a1 01 	call	0x342	; 0x342 <_ZN6DS32317setTimeEhhh>
+	
+	PORTD &= ~(1<<SetTimeLED); // turning off set time LED
+ 558:	8b b1       	in	r24, 0x0b	; 11
+ 55a:	8b 7f       	andi	r24, 0xFB	; 251
+ 55c:	8b b9       	out	0x0b, r24	; 11
+	PORTD &= ~(1<<SetMinuteLED); // turning off set minute LED
+ 55e:	8b b1       	in	r24, 0x0b	; 11
+ 560:	8f 7d       	andi	r24, 0xDF	; 223
+ 562:	8b b9       	out	0x0b, r24	; 11
+ 564:	9f e9       	ldi	r25, 0x9F	; 159
+ 566:	26 e8       	ldi	r18, 0x86	; 134
+ 568:	81 e0       	ldi	r24, 0x01	; 1
+ 56a:	91 50       	subi	r25, 0x01	; 1
+ 56c:	20 40       	sbci	r18, 0x00	; 0
+ 56e:	80 40       	sbci	r24, 0x00	; 0
+ 570:	e1 f7       	brne	.-8      	; 0x56a <_Z21Alarm_timing_set_time6DS3231+0xa8>
+ 572:	00 c0       	rjmp	.+0      	; 0x574 <_Z21Alarm_timing_set_time6DS3231+0xb2>
+ 574:	00 00       	nop
 	
 	_delay_ms(500);
- 56c:	07 c0       	rjmp	.+14     	; 0x57c <_Z21Alarm_timing_set_time6DS3231+0xbe>
- 56e:	87 ea       	ldi	r24, 0xA7	; 167
- 570:	91 e6       	ldi	r25, 0x61	; 97
- 572:	01 97       	sbiw	r24, 0x01	; 1
- 574:	f1 f7       	brne	.-4      	; 0x572 <_Z21Alarm_timing_set_time6DS3231+0xb4>
- 576:	00 c0       	rjmp	.+0      	; 0x578 <_Z21Alarm_timing_set_time6DS3231+0xba>
- 578:	00 00       	nop
- 57a:	e1 cf       	rjmp	.-62     	; 0x53e <_Z21Alarm_timing_set_time6DS3231+0x80>
- 57c:	29 96       	adiw	r28, 0x09	; 9
- 57e:	0f b6       	in	r0, 0x3f	; 63
- 580:	f8 94       	cli
- 582:	de bf       	out	0x3e, r29	; 62
- 584:	0f be       	out	0x3f, r0	; 63
- 586:	cd bf       	out	0x3d, r28	; 61
- 588:	df 91       	pop	r29
- 58a:	cf 91       	pop	r28
- 58c:	1f 91       	pop	r17
- 58e:	0f 91       	pop	r16
- 590:	08 95       	ret
+ 576:	07 c0       	rjmp	.+14     	; 0x586 <_Z21Alarm_timing_set_time6DS3231+0xc4>
+ 578:	87 ea       	ldi	r24, 0xA7	; 167
+ 57a:	91 e6       	ldi	r25, 0x61	; 97
+ 57c:	01 97       	sbiw	r24, 0x01	; 1
+ 57e:	f1 f7       	brne	.-4      	; 0x57c <_Z21Alarm_timing_set_time6DS3231+0xba>
+ 580:	00 c0       	rjmp	.+0      	; 0x582 <_Z21Alarm_timing_set_time6DS3231+0xc0>
+ 582:	00 00       	nop
+ 584:	de cf       	rjmp	.-68     	; 0x542 <_Z21Alarm_timing_set_time6DS3231+0x80>
+ 586:	29 96       	adiw	r28, 0x09	; 9
+ 588:	0f b6       	in	r0, 0x3f	; 63
+ 58a:	f8 94       	cli
+ 58c:	de bf       	out	0x3e, r29	; 62
+ 58e:	0f be       	out	0x3f, r0	; 63
+ 590:	cd bf       	out	0x3d, r28	; 61
+ 592:	df 91       	pop	r29
+ 594:	cf 91       	pop	r28
+ 596:	1f 91       	pop	r17
+ 598:	0f 91       	pop	r16
+ 59a:	08 95       	ret
 
-00000592 <_Z41__static_initialization_and_destruction_0ii>:
+0000059c <_Z41__static_initialization_and_destruction_0ii>:
 		
 		_delay_ms(100);
 		
     }
 	return 0;
 }
- 592:	01 97       	sbiw	r24, 0x01	; 1
- 594:	49 f4       	brne	.+18     	; 0x5a8 <_Z41__static_initialization_and_destruction_0ii+0x16>
- 596:	6f 3f       	cpi	r22, 0xFF	; 255
- 598:	7f 4f       	sbci	r23, 0xFF	; 255
- 59a:	31 f4       	brne	.+12     	; 0x5a8 <_Z41__static_initialization_and_destruction_0ii+0x16>
+ 59c:	01 97       	sbiw	r24, 0x01	; 1
+ 59e:	49 f4       	brne	.+18     	; 0x5b2 <_Z41__static_initialization_and_destruction_0ii+0x16>
+ 5a0:	6f 3f       	cpi	r22, 0xFF	; 255
+ 5a2:	7f 4f       	sbci	r23, 0xFF	; 255
+ 5a4:	31 f4       	brne	.+12     	; 0x5b2 <_Z41__static_initialization_and_destruction_0ii+0x16>
 #include "Alarm_timing.h"		// Local Library
 
 #define SDA PINC4
 #define SCL PINC5
 
 DS3231 RTC(SDA,SCL);
- 59c:	45 e0       	ldi	r20, 0x05	; 5
- 59e:	64 e0       	ldi	r22, 0x04	; 4
- 5a0:	80 e0       	ldi	r24, 0x00	; 0
- 5a2:	91 e0       	ldi	r25, 0x01	; 1
- 5a4:	0e 94 63 00 	call	0xc6	; 0xc6 <_ZN6DS3231C1Ehh>
- 5a8:	08 95       	ret
+ 5a6:	45 e0       	ldi	r20, 0x05	; 5
+ 5a8:	64 e0       	ldi	r22, 0x04	; 4
+ 5aa:	80 e0       	ldi	r24, 0x00	; 0
+ 5ac:	91 e0       	ldi	r25, 0x01	; 1
+ 5ae:	0e 94 63 00 	call	0xc6	; 0xc6 <_ZN6DS3231C1Ehh>
+ 5b2:	08 95       	ret
 
-000005aa <main>:
+000005b4 <main>:
 
 int main(void)
 {
- 5aa:	cf 93       	push	r28
- 5ac:	df 93       	push	r29
- 5ae:	cd b7       	in	r28, 0x3d	; 61
- 5b0:	de b7       	in	r29, 0x3e	; 62
- 5b2:	2e 97       	sbiw	r28, 0x0e	; 14
- 5b4:	0f b6       	in	r0, 0x3f	; 63
- 5b6:	f8 94       	cli
- 5b8:	de bf       	out	0x3e, r29	; 62
- 5ba:	0f be       	out	0x3f, r0	; 63
- 5bc:	cd bf       	out	0x3d, r28	; 61
+ 5b4:	cf 93       	push	r28
+ 5b6:	df 93       	push	r29
+ 5b8:	cd b7       	in	r28, 0x3d	; 61
+ 5ba:	de b7       	in	r29, 0x3e	; 62
+ 5bc:	2e 97       	sbiw	r28, 0x0e	; 14
+ 5be:	0f b6       	in	r0, 0x3f	; 63
+ 5c0:	f8 94       	cli
+ 5c2:	de bf       	out	0x3e, r29	; 62
+ 5c4:	0f be       	out	0x3f, r0	; 63
+ 5c6:	cd bf       	out	0x3d, r28	; 61
 	// initialing pins as inputs/outputs and setting initial values
 	// function from library Alarm_timing
 	int set_time_input = 0;
 	int set_alarm_input = 0;
 
 	Alarm alarm1;
- 5be:	ce 01       	movw	r24, r28
- 5c0:	01 96       	adiw	r24, 0x01	; 1
- 5c2:	0e 94 cc 01 	call	0x398	; 0x398 <_ZN5AlarmC1Ev>
+ 5c8:	ce 01       	movw	r24, r28
+ 5ca:	01 96       	adiw	r24, 0x01	; 1
+ 5cc:	0e 94 cc 01 	call	0x398	; 0x398 <_ZN5AlarmC1Ev>
 	RTC.begin();
- 5c6:	80 e0       	ldi	r24, 0x00	; 0
- 5c8:	91 e0       	ldi	r25, 0x01	; 1
- 5ca:	0e 94 67 00 	call	0xce	; 0xce <_ZN6DS32315beginEv>
+ 5d0:	80 e0       	ldi	r24, 0x00	; 0
+ 5d2:	91 e0       	ldi	r25, 0x01	; 1
+ 5d4:	0e 94 67 00 	call	0xce	; 0xce <_ZN6DS32315beginEv>
 	
 	Alarm_timing_init();
- 5ce:	0e 94 57 02 	call	0x4ae	; 0x4ae <_Z17Alarm_timing_initv>
+ 5d8:	0e 94 59 02 	call	0x4b2	; 0x4b2 <_Z17Alarm_timing_initv>
     
     while (1) 
     {
 		// get the current time
 		Time t = RTC.getTime();
- 5d2:	80 e0       	ldi	r24, 0x00	; 0
- 5d4:	91 e0       	ldi	r25, 0x01	; 1
- 5d6:	0e 94 33 01 	call	0x266	; 0x266 <_ZN6DS32317getTimeEv>
- 5da:	2f 83       	std	Y+7, r18	; 0x07
- 5dc:	38 87       	std	Y+8, r19	; 0x08
- 5de:	49 87       	std	Y+9, r20	; 0x09
- 5e0:	5a 87       	std	Y+10, r21	; 0x0a
- 5e2:	6b 87       	std	Y+11, r22	; 0x0b
- 5e4:	7c 87       	std	Y+12, r23	; 0x0c
- 5e6:	8d 87       	std	Y+13, r24	; 0x0d
- 5e8:	9e 87       	std	Y+14, r25	; 0x0e
+ 5dc:	80 e0       	ldi	r24, 0x00	; 0
+ 5de:	91 e0       	ldi	r25, 0x01	; 1
+ 5e0:	0e 94 33 01 	call	0x266	; 0x266 <_ZN6DS32317getTimeEv>
+ 5e4:	2f 83       	std	Y+7, r18	; 0x07
+ 5e6:	38 87       	std	Y+8, r19	; 0x08
+ 5e8:	49 87       	std	Y+9, r20	; 0x09
+ 5ea:	5a 87       	std	Y+10, r21	; 0x0a
+ 5ec:	6b 87       	std	Y+11, r22	; 0x0b
+ 5ee:	7c 87       	std	Y+12, r23	; 0x0c
+ 5f0:	8d 87       	std	Y+13, r24	; 0x0d
+ 5f2:	9e 87       	std	Y+14, r25	; 0x0e
 		int h = t.hour;
- 5ea:	e2 2e       	mov	r14, r18
- 5ec:	f1 2c       	mov	r15, r1
+ 5f4:	e2 2e       	mov	r14, r18
+ 5f6:	f1 2c       	mov	r15, r1
 		int m = t.min;
- 5ee:	c3 2e       	mov	r12, r19
- 5f0:	d1 2c       	mov	r13, r1
+ 5f8:	c3 2e       	mov	r12, r19
+ 5fa:	d1 2c       	mov	r13, r1
 		
 		// check if any mode button is pressed, if so execute respective function
 		
 		// set time
 		set_time_input = PINC & (1<<SetTime); // status of the set time button; 0 -> not pressed , otherwise -> pressed
 		if (set_time_input > 0)	Alarm_timing_set_time(RTC);	// the button is pressed
- 5f2:	30 9b       	sbis	0x06, 0	; 6
- 5f4:	14 c0       	rjmp	.+40     	; 0x61e <main+0x74>
- 5f6:	00 91 00 01 	lds	r16, 0x0100	; 0x800100 <__DATA_REGION_ORIGIN__>
- 5fa:	10 91 01 01 	lds	r17, 0x0101	; 0x800101 <__DATA_REGION_ORIGIN__+0x1>
- 5fe:	20 91 02 01 	lds	r18, 0x0102	; 0x800102 <__DATA_REGION_ORIGIN__+0x2>
- 602:	30 91 03 01 	lds	r19, 0x0103	; 0x800103 <__DATA_REGION_ORIGIN__+0x3>
- 606:	40 91 04 01 	lds	r20, 0x0104	; 0x800104 <__DATA_REGION_ORIGIN__+0x4>
- 60a:	50 91 05 01 	lds	r21, 0x0105	; 0x800105 <__DATA_REGION_ORIGIN__+0x5>
- 60e:	60 91 06 01 	lds	r22, 0x0106	; 0x800106 <__DATA_REGION_ORIGIN__+0x6>
- 612:	70 91 07 01 	lds	r23, 0x0107	; 0x800107 <__DATA_REGION_ORIGIN__+0x7>
- 616:	80 91 08 01 	lds	r24, 0x0108	; 0x800108 <__DATA_REGION_ORIGIN__+0x8>
- 61a:	0e 94 5f 02 	call	0x4be	; 0x4be <_Z21Alarm_timing_set_time6DS3231>
-		
+ 5fc:	30 9b       	sbis	0x06, 0	; 6
+ 5fe:	14 c0       	rjmp	.+40     	; 0x628 <main+0x74>
+ 600:	00 91 00 01 	lds	r16, 0x0100	; 0x800100 <__DATA_REGION_ORIGIN__>
+ 604:	10 91 01 01 	lds	r17, 0x0101	; 0x800101 <__DATA_REGION_ORIGIN__+0x1>
+ 608:	20 91 02 01 	lds	r18, 0x0102	; 0x800102 <__DATA_REGION_ORIGIN__+0x2>
+ 60c:	30 91 03 01 	lds	r19, 0x0103	; 0x800103 <__DATA_REGION_ORIGIN__+0x3>
+ 610:	40 91 04 01 	lds	r20, 0x0104	; 0x800104 <__DATA_REGION_ORIGIN__+0x4>
+ 614:	50 91 05 01 	lds	r21, 0x0105	; 0x800105 <__DATA_REGION_ORIGIN__+0x5>
+ 618:	60 91 06 01 	lds	r22, 0x0106	; 0x800106 <__DATA_REGION_ORIGIN__+0x6>
+ 61c:	70 91 07 01 	lds	r23, 0x0107	; 0x800107 <__DATA_REGION_ORIGIN__+0x7>
+ 620:	80 91 08 01 	lds	r24, 0x0108	; 0x800108 <__DATA_REGION_ORIGIN__+0x8>
+ 624:	0e 94 61 02 	call	0x4c2	; 0x4c2 <_Z21Alarm_timing_set_time6DS3231>
 		
 		// set new alarm
 		set_alarm_input = PINC & (1<<SetAlarm); // state of the set alarm button; 0 -> not pressed , otherwise -> pressed
- 61e:	06 b1       	in	r16, 0x06	; 6
- 620:	02 70       	andi	r16, 0x02	; 2
- 622:	10 e0       	ldi	r17, 0x00	; 0
 		
 		// if set alarm is pressed without a current active alarm --> set new alarm
 		if (set_alarm_input > 0 && alarm1.active == 0)
- 624:	10 16       	cp	r1, r16
- 626:	11 06       	cpc	r1, r17
- 628:	44 f4       	brge	.+16     	; 0x63a <main+0x90>
- 62a:	8d 81       	ldd	r24, Y+5	; 0x05
- 62c:	9e 81       	ldd	r25, Y+6	; 0x06
- 62e:	89 2b       	or	r24, r25
- 630:	21 f4       	brne	.+8      	; 0x63a <main+0x90>
+ 628:	31 9b       	sbis	0x06, 1	; 6
+ 62a:	08 c0       	rjmp	.+16     	; 0x63c <main+0x88>
+ 62c:	8d 81       	ldd	r24, Y+5	; 0x05
+ 62e:	9e 81       	ldd	r25, Y+6	; 0x06
+ 630:	89 2b       	or	r24, r25
+ 632:	21 f4       	brne	.+8      	; 0x63c <main+0x88>
 		{
 			alarm1.set();
- 632:	ce 01       	movw	r24, r28
- 634:	01 96       	adiw	r24, 0x01	; 1
- 636:	0e 94 ff 01 	call	0x3fe	; 0x3fe <_ZN5Alarm3setEv>
+ 634:	ce 01       	movw	r24, r28
+ 636:	01 96       	adiw	r24, 0x01	; 1
+ 638:	0e 94 fe 01 	call	0x3fc	; 0x3fc <_ZN5Alarm3setEv>
 		}
+		
+		set_alarm_input = PINC & (1<<SetAlarm); // state of the set alarm button; 0 -> not pressed , otherwise -> pressed
 		
 		// if set alarm is pressed with a current active alarm --> delete the current alarm
 		if (set_alarm_input > 0 && alarm1.active == 1)
- 63a:	10 16       	cp	r1, r16
- 63c:	11 06       	cpc	r1, r17
- 63e:	44 f4       	brge	.+16     	; 0x650 <main+0xa6>
+ 63c:	31 9b       	sbis	0x06, 1	; 6
+ 63e:	08 c0       	rjmp	.+16     	; 0x650 <main+0x9c>
  640:	8d 81       	ldd	r24, Y+5	; 0x05
  642:	9e 81       	ldd	r25, Y+6	; 0x06
  644:	01 97       	sbiw	r24, 0x01	; 1
- 646:	21 f4       	brne	.+8      	; 0x650 <main+0xa6>
+ 646:	21 f4       	brne	.+8      	; 0x650 <main+0x9c>
 		{
 			alarm1.del();
  648:	ce 01       	movw	r24, r28
@@ -1107,16 +1110,16 @@ int main(void)
  652:	9a 81       	ldd	r25, Y+2	; 0x02
  654:	e8 16       	cp	r14, r24
  656:	f9 06       	cpc	r15, r25
- 658:	69 f4       	brne	.+26     	; 0x674 <main+0xca>
+ 658:	69 f4       	brne	.+26     	; 0x674 <main+0xc0>
  65a:	8b 81       	ldd	r24, Y+3	; 0x03
  65c:	9c 81       	ldd	r25, Y+4	; 0x04
  65e:	c8 16       	cp	r12, r24
  660:	d9 06       	cpc	r13, r25
- 662:	41 f4       	brne	.+16     	; 0x674 <main+0xca>
+ 662:	41 f4       	brne	.+16     	; 0x674 <main+0xc0>
  664:	8d 81       	ldd	r24, Y+5	; 0x05
  666:	9e 81       	ldd	r25, Y+6	; 0x06
  668:	01 97       	sbiw	r24, 0x01	; 1
- 66a:	21 f4       	brne	.+8      	; 0x674 <main+0xca>
+ 66a:	21 f4       	brne	.+8      	; 0x674 <main+0xc0>
 		{
 			alarm1.ring();
  66c:	ce 01       	movw	r24, r28
@@ -1125,8 +1128,8 @@ int main(void)
  674:	87 ea       	ldi	r24, 0xA7	; 167
  676:	91 e6       	ldi	r25, 0x61	; 97
  678:	01 97       	sbiw	r24, 0x01	; 1
- 67a:	f1 f7       	brne	.-4      	; 0x678 <main+0xce>
- 67c:	00 c0       	rjmp	.+0      	; 0x67e <main+0xd4>
+ 67a:	f1 f7       	brne	.-4      	; 0x678 <main+0xc4>
+ 67c:	00 c0       	rjmp	.+0      	; 0x67e <main+0xca>
  67e:	00 00       	nop
 	Alarm alarm1;
 	RTC.begin();
@@ -1134,7 +1137,7 @@ int main(void)
 	Alarm_timing_init();
     
     while (1) 
- 680:	a8 cf       	rjmp	.-176    	; 0x5d2 <main+0x28>
+ 680:	ad cf       	rjmp	.-166    	; 0x5dc <main+0x28>
 
 00000682 <_GLOBAL__sub_I_RTC>:
 		
@@ -1147,7 +1150,7 @@ int main(void)
  684:	7f ef       	ldi	r23, 0xFF	; 255
  686:	81 e0       	ldi	r24, 0x01	; 1
  688:	90 e0       	ldi	r25, 0x00	; 0
- 68a:	0e 94 c9 02 	call	0x592	; 0x592 <_Z41__static_initialization_and_destruction_0ii>
+ 68a:	0e 94 ce 02 	call	0x59c	; 0x59c <_Z41__static_initialization_and_destruction_0ii>
  68e:	08 95       	ret
 
 00000690 <__tablejump2__>:

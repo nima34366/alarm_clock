@@ -348,21 +348,21 @@ END GROUP
                 0x000003c8       0x2c Alarm_timing.o
                 0x000003c8                _ZN5Alarm4ringEv
  .text._Z10read_digitv
-                0x000003f4        0xa Alarm_timing.o
+                0x000003f4        0x8 Alarm_timing.o
                 0x000003f4                _Z10read_digitv
  .text._ZN5Alarm3setEv
-                0x000003fe       0xb0 Alarm_timing.o
-                0x000003fe                _ZN5Alarm3setEv
+                0x000003fc       0xb6 Alarm_timing.o
+                0x000003fc                _ZN5Alarm3setEv
  .text._Z17Alarm_timing_initv
-                0x000004ae       0x10 Alarm_timing.o
-                0x000004ae                _Z17Alarm_timing_initv
+                0x000004b2       0x10 Alarm_timing.o
+                0x000004b2                _Z17Alarm_timing_initv
  .text._Z21Alarm_timing_set_time6DS3231
-                0x000004be       0xd4 Alarm_timing.o
-                0x000004be                _Z21Alarm_timing_set_time6DS3231
+                0x000004c2       0xda Alarm_timing.o
+                0x000004c2                _Z21Alarm_timing_set_time6DS3231
  .text._Z41__static_initialization_and_destruction_0ii
-                0x00000592       0x18 main.o
- .text.main     0x000005aa       0xd8 main.o
-                0x000005aa                main
+                0x0000059c       0x18 main.o
+ .text.main     0x000005b4       0xce main.o
+                0x000005b4                main
  .text._GLOBAL__sub_I_RTC
                 0x00000682        0xe main.o
  .text.libgcc   0x00000690        0xc c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_tablejump2.o)
@@ -497,23 +497,23 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x1969
+.debug_info     0x00000000     0x196c
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x5f4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5/crtatmega328p.o
- .debug_info    0x000005f4      0xd63 Alarm_timing.o
- .debug_info    0x00001357      0x612 main.o
+ .debug_info    0x000005f4      0xd66 Alarm_timing.o
+ .debug_info    0x0000135a      0x612 main.o
 
-.debug_abbrev   0x00000000      0xbca
+.debug_abbrev   0x00000000      0xbd9
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x5a2 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5/crtatmega328p.o
- .debug_abbrev  0x000005a2      0x394 Alarm_timing.o
- .debug_abbrev  0x00000936      0x294 main.o
+ .debug_abbrev  0x000005a2      0x3a3 Alarm_timing.o
+ .debug_abbrev  0x00000945      0x294 main.o
 
-.debug_line     0x00000000      0x846
+.debug_line     0x00000000      0x852
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000       0x1a c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/../../../../avr/lib/avr5/crtatmega328p.o
- .debug_line    0x0000001a      0x637 Alarm_timing.o
- .debug_line    0x00000651      0x1f5 main.o
+ .debug_line    0x0000001a      0x649 Alarm_timing.o
+ .debug_line    0x00000663      0x1ef main.o
 
 .debug_frame    0x00000000      0x1f8
  *(.debug_frame)
@@ -528,10 +528,10 @@ END GROUP
  .debug_str     0x00000722       0x71 main.o
                                 0x4fc (size before relaxing)
 
-.debug_loc      0x00000000      0xa77
+.debug_loc      0x00000000      0xa3a
  *(.debug_loc)
- .debug_loc     0x00000000      0x964 Alarm_timing.o
- .debug_loc     0x00000964      0x113 main.o
+ .debug_loc     0x00000000      0x94b Alarm_timing.o
+ .debug_loc     0x0000094b       0xef main.o
 
 .debug_macinfo
  *(.debug_macinfo)
