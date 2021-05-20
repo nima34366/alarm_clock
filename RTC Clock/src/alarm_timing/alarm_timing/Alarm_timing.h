@@ -14,13 +14,12 @@
 #include <stdint.h>
 
 // LEDs
-#define LEDPort PORTD
 #define AlarmActiveLED PIND0
 #define AlarmRingLED PIND1
-#define SetTimeLED PIND3
-#define SetAlarmLED PIND4
-#define SetHourLED PIND6
-#define SetMinuteLED PIND0
+#define SetTimeLED PIND2
+#define SetAlarmLED PIND3
+#define SetHourLED PIND4
+#define SetMinuteLED PIND5
 
 // Bits for number reading
 #define Bit1 PINB0

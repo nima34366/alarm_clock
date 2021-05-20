@@ -267,7 +267,9 @@ void Alarm::set()
 	this->active = 1;
 	
 	PORTD |= (1<<AlarmActiveLED); // turning on active alarm indicative LED
+	PORTD &= ~(1<<SetAlarmLED); // turning off set alarm LED
 	_delay_ms(500);
+	
 }
 
 void Alarm::del()
@@ -304,7 +306,7 @@ void Alarm::ring()
 int read_digit()
 {
 	int bit_input = PINB;
-	int number = bit_input & (00111111); // remove bit 6 and 7
+	int number = bit_input & (0b00111111); // remove bit 6 and 7
 	return number;
 }
 
@@ -360,10 +362,11 @@ void Alarm_timing_set_time(DS3231 rtc)
 		_delay_ms(100);
 	}
 	
-	PORTD &= ~(1<<SetMinuteLED); // turning off set minute LED
-	
 	//setting the time
 	rtc.setTime(time_h,time_m,0);
+	
+	PORTD &= ~(1<<SetTimeLED); // turning off set time LED
+	PORTD &= ~(1<<SetMinuteLED); // turning off set minute LED
 	
 	_delay_ms(500);
 }

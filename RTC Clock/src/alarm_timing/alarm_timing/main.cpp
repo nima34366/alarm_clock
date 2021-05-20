@@ -56,6 +56,8 @@ int main(void)
 			alarm1.set();
 		}
 		
+		set_alarm_input = PINC & (1<<SetAlarm); // state of the set alarm button; 0 -> not pressed , otherwise -> pressed
+		
 		// if set alarm is pressed with a current active alarm --> delete the current alarm
 		if (set_alarm_input > 0 && alarm1.active == 1)
 		{
