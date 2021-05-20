@@ -1,0 +1,142 @@
+Removed Pin From Net: NetName=GND Pin=D1-2
+Removed Pin From Net: NetName=GND Pin=D2-2
+Removed Pin From Net: NetName=GND Pin=D3-2
+Removed Pin From Net: NetName=GND Pin=D4-2
+Removed Pin From Net: NetName=GND Pin=D5-2
+Removed Pin From Net: NetName=GND Pin=D6-2
+Removed Pin From Net: NetName=GND Pin=D7-2
+Removed Pin From Net: NetName=GND Pin=D8-2
+Removed Pin From Net: NetName=GND Pin=D9-2
+Change Component Footprint: Designator=D1 Old Footprint=LED-0 New Footprint=LEDRD254W50D500H1060
+Change Component Footprint: Designator=D2 Old Footprint=LED-0 New Footprint=LEDRD254W50D500H1060
+Change Component Footprint: Designator=D3 Old Footprint=LED-0 New Footprint=LEDRD254W50D500H1060
+Change Component Footprint: Designator=D4 Old Footprint=LED-0 New Footprint=LEDRD254W50D500H1060
+Change Component Footprint: Designator=D5 Old Footprint=LED-0 New Footprint=LEDRD254W50D500H1060
+Change Component Footprint: Designator=D6 Old Footprint=LED-0 New Footprint=LEDRD254W50D500H1060
+Change Component Footprint: Designator=D7 Old Footprint=LED-0 New Footprint=LEDRD254W50D500H1060
+Change Component Footprint: Designator=D8 Old Footprint=LED-0 New Footprint=LEDRD254W50D500H1060
+Change Component Comment : Designator=D1 Old Comment=LED0 New Comment=L-53GD
+Change Component Comment : Designator=D2 Old Comment=LED0 New Comment=L-53GD
+Change Component Comment : Designator=D3 Old Comment=LED0 New Comment=L-53GD
+Change Component Comment : Designator=D4 Old Comment=LED0 New Comment=L-53GD
+Change Component Comment : Designator=D5 Old Comment=LED0 New Comment=L-53GD
+Change Component Comment : Designator=D6 Old Comment=LED0 New Comment=L-53GD
+Change Component Comment : Designator=D7 Old Comment=LED0 New Comment=L-53GD
+Change Component Comment : Designator=D8 Old Comment=LED0 New Comment=L-53GD
+Change component parameters: Designator = "D1" ("D1"); Footprint = "LED-0"; UniqueID = "\NPRODEVL" ("\NPRODEVL")
+Change component parameters (AddParameter): Name = "Availability"; Value = "Unavailable"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MF"; Value = "Kingbright"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MP"; Value = "L-53GD"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "CDIP-28 Kingbright"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Price"; Value = "None"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "SnapEDA_Link"; Value = "https://www.snapeda.com/parts/L-53GD/Kingbright/view-part/525636/?ref=snap"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Change component parameters: Designator = "D2" ("D2"); Footprint = "LED-0"; UniqueID = "\QQHXRHCR" ("\QQHXRHCR")
+Change component parameters (AddParameter): Name = "Availability"; Value = "Unavailable"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MF"; Value = "Kingbright"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MP"; Value = "L-53GD"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "CDIP-28 Kingbright"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Price"; Value = "None"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "SnapEDA_Link"; Value = "https://www.snapeda.com/parts/L-53GD/Kingbright/view-part/525636/?ref=snap"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Change component parameters: Designator = "D3" ("D3"); Footprint = "LED-0"; UniqueID = "\QCEBUTPX" ("\QCEBUTPX")
+Change component parameters (AddParameter): Name = "Availability"; Value = "Unavailable"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MF"; Value = "Kingbright"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MP"; Value = "L-53GD"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "CDIP-28 Kingbright"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Price"; Value = "None"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "SnapEDA_Link"; Value = "https://www.snapeda.com/parts/L-53GD/Kingbright/view-part/525636/?ref=snap"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Change component parameters: Designator = "D4" ("D4"); Footprint = "LED-0"; UniqueID = "\LDFLZZRI" ("\LDFLZZRI")
+Change component parameters (AddParameter): Name = "Availability"; Value = "Unavailable"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MF"; Value = "Kingbright"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MP"; Value = "L-53GD"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "CDIP-28 Kingbright"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Price"; Value = "None"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "SnapEDA_Link"; Value = "https://www.snapeda.com/parts/L-53GD/Kingbright/view-part/525636/?ref=snap"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Change component parameters: Designator = "D5" ("D5"); Footprint = "LED-0"; UniqueID = "\AKPPRLPH" ("\AKPPRLPH")
+Change component parameters (AddParameter): Name = "Availability"; Value = "Unavailable"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MF"; Value = "Kingbright"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MP"; Value = "L-53GD"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "CDIP-28 Kingbright"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Price"; Value = "None"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "SnapEDA_Link"; Value = "https://www.snapeda.com/parts/L-53GD/Kingbright/view-part/525636/?ref=snap"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Change component parameters: Designator = "D6" ("D6"); Footprint = "LED-0"; UniqueID = "\QNUUWWUN" ("\QNUUWWUN")
+Change component parameters (AddParameter): Name = "Availability"; Value = "Unavailable"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MF"; Value = "Kingbright"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MP"; Value = "L-53GD"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "CDIP-28 Kingbright"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Price"; Value = "None"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "SnapEDA_Link"; Value = "https://www.snapeda.com/parts/L-53GD/Kingbright/view-part/525636/?ref=snap"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Change component parameters: Designator = "D7" ("D7"); Footprint = "LED-0"; UniqueID = "\BEQJBKPN" ("\BEQJBKPN")
+Change component parameters (AddParameter): Name = "Availability"; Value = "Unavailable"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MF"; Value = "Kingbright"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MP"; Value = "L-53GD"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "CDIP-28 Kingbright"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Price"; Value = "None"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "SnapEDA_Link"; Value = "https://www.snapeda.com/parts/L-53GD/Kingbright/view-part/525636/?ref=snap"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Change component parameters: Designator = "D8" ("D8"); Footprint = "LED-0"; UniqueID = "\BOGWYMXZ" ("\BOGWYMXZ")
+Change component parameters (AddParameter): Name = "Availability"; Value = "Unavailable"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MF"; Value = "Kingbright"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MP"; Value = "L-53GD"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "CDIP-28 Kingbright"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Price"; Value = "None"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "SnapEDA_Link"; Value = "https://www.snapeda.com/parts/L-53GD/Kingbright/view-part/525636/?ref=snap"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Added Component: Designator=D0(LEDRD254W50D500H1060)
+Add component (AddParameter): Name = "Availability"; Value = "Unavailable"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MF"; Value = "Kingbright"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MP"; Value = "L-53GD"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = "CDIP-28 Kingbright"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Price"; Value = "None"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "SnapEDA_Link"; Value = "https://www.snapeda.com/parts/L-53GD/Kingbright/view-part/525636/?ref=snap"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Added Pin To Net: NetName=GND Pin=D0-C
+Added Pin To Net: NetName=GND Pin=D1-C
+Added Pin To Net: NetName=GND Pin=D2-C
+Added Pin To Net: NetName=GND Pin=D3-C
+Added Pin To Net: NetName=GND Pin=D4-C
+Added Pin To Net: NetName=GND Pin=D5-C
+Added Pin To Net: NetName=GND Pin=D6-C
+Added Pin To Net: NetName=GND Pin=D7-C
+Added Pin To Net: NetName=GND Pin=D8-C
+Added Pin To Net: NetName=NetD0_A Pin=D0-A
+Added Pin To Net: NetName=NetD0_A Pin=R1-2
+Added Net: Name=NetD0_A
+Added Pin To Net: NetName=NetD1_A Pin=D1-A
+Added Pin To Net: NetName=NetD1_A Pin=R2-2
+Added Net: Name=NetD1_A
+Added Pin To Net: NetName=NetD2_A Pin=D2-A
+Added Pin To Net: NetName=NetD2_A Pin=R3-2
+Added Net: Name=NetD2_A
+Added Pin To Net: NetName=NetD3_A Pin=D3-A
+Added Pin To Net: NetName=NetD3_A Pin=R4-2
+Added Net: Name=NetD3_A
+Added Pin To Net: NetName=NetD4_A Pin=D4-A
+Added Pin To Net: NetName=NetD4_A Pin=R5-2
+Added Net: Name=NetD4_A
+Added Pin To Net: NetName=NetD5_A Pin=D5-A
+Added Pin To Net: NetName=NetD5_A Pin=R6-2
+Added Net: Name=NetD5_A
+Added Pin To Net: NetName=NetD6_A Pin=D6-A
+Added Pin To Net: NetName=NetD6_A Pin=R7-2
+Added Net: Name=NetD6_A
+Added Pin To Net: NetName=NetD7_A Pin=D7-A
+Added Pin To Net: NetName=NetD7_A Pin=R8-2
+Added Net: Name=NetD7_A
+Added Pin To Net: NetName=NetD8_A Pin=D8-A
+Added Pin To Net: NetName=NetD8_A Pin=R9-2
+Added Net: Name=NetD8_A
+Added Member To Class: ClassName=Sheet1 Member=Component D0 L-53GD
+Added Member To Class: ClassName=Sheet1 Member=Component D1 L-53GD
+Added Member To Class: ClassName=Sheet1 Member=Component D2 L-53GD
+Added Member To Class: ClassName=Sheet1 Member=Component D3 L-53GD
+Added Member To Class: ClassName=Sheet1 Member=Component D4 L-53GD
+Added Member To Class: ClassName=Sheet1 Member=Component D5 L-53GD
+Added Member To Class: ClassName=Sheet1 Member=Component D6 L-53GD
+Added Member To Class: ClassName=Sheet1 Member=Component D7 L-53GD
+Added Member To Class: ClassName=Sheet1 Member=Component D8 L-53GD
