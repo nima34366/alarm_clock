@@ -32,19 +32,16 @@
 #define REG_TEMPM	0x11
 #define REG_TEMPL	0x12
 
-#define SEC_1970_TO_2000 946684800
-
 #define DS3231_ADDR_R	0xD1
 #define DS3231_ADDR_W	0xD0
 #define DS3231_ADDR		0x68  
 
-/*#define _BV(n) (1 << n)*/
 #define cbi(sfr, bit) (_SFR_BYTE(sfr) &= ~_BV(bit))
 
 #define SDA PINC4
 #define SCL PINC5
 
-// Class methods for Time
+/*************** Class methods for Time ***************/
 Time::Time()
 {
 	this->year = 2021;
@@ -56,7 +53,7 @@ Time::Time()
 	this->dow  = 3;
 }
 
-// Class methods for DS3231
+/************** Class methods for DS3231 **************/
 DS3231::DS3231(uint8_t data_pin, uint8_t sclk_pin)
 {
 	_sda_pin = data_pin;
@@ -68,15 +65,14 @@ void DS3231::begin()
 	// activate internal pullups for twi.
 	PORTC |= (1<<SDA);
 	PORTC |= (1<<SCL);
-	//delay(1);  // Workaround for a linker bug
 
 	// initialize twi prescalar and bit rate
 	cbi(TWSR, TWPS0);
 	cbi(TWSR, TWPS1);
 	TWBR = ((F_CPU / TWI_FREQ) - 16) / 2;
 
-	// enable twi module, acks, and twi interrupt
-	TWCR = _BV(TWEN) | _BV(TWIE)/* | _BV(TWEA)*/;
+	// enable twi module and twi interrupt
+	TWCR = _BV(TWEN) | _BV(TWIE);
 }
 
 void DS3231::_burstRead()
@@ -181,6 +177,7 @@ void DS3231::setTime(uint8_t hour, uint8_t min, uint8_t sec)
 	}
 }
 
+// functions to convert hex representation to integer value
 uint8_t	DS3231::_decode(uint8_t value)
 {
 	uint8_t decoded = value & 127;
@@ -203,13 +200,15 @@ uint8_t	DS3231::_decodeY(uint8_t value)
 	return decoded;
 }
 
+// functions to convert integer value to hex representation to write to registers
 uint8_t DS3231::_encode(uint8_t value)
 {
 	uint8_t encoded = ((value / 10) << 4) + (value % 10);
 	return encoded;
 }
 
-// Class methods of Alarm
+
+/****************** Class methods of Alarm ****************/
 Alarm::Alarm()
 {
 	this->hour = 0;
@@ -314,7 +313,7 @@ unsigned char reverse(unsigned char b) {
 int read_digit()
 {
 	int bit_input = BitPin % (0b00111111);
-	int number = reverse(bit_input<<2); // manupulating the input to obtain the integer
+	int number = reverse(bit_input<<2); // manipulating the input to obtain the integer
 	return number;
 }
 
