@@ -3,3 +3,21 @@ RTC Clock/pcb_design/Atmel-7810-Automotive-Microcontrollers-ATmega328P_Datasheet
 RTC Clock/simulation/Last Loaded New Project.pdsbak
 RTC Clock/simulation/New Project.pdsprj.LAPTOP-KF378KLO.Chathuni.workspace
 *.Zip
+RTC Clock/pcb design/alarm_timing/alarm_timing/alarm_timing.PrjPcbStructure
+RTC Clock/pcb design/alarm_timing/alarm_timing/Project Output/alarm_timing.GTS
+RTC Clock/src/alarm_timing/.vs/alarm_timing/v14/.atsuo
+RTC Clock/src/alarm_timing/alarm_timing.atsln
+RTC Clock/src/alarm_timing/alarm_timing/alarm_timing.componentinfo.xml
+RTC Clock/src/alarm_timing/alarm_timing/alarm_timing.cppproj
+RTC Clock/src/alarm_timing/alarm_timing/Debug/Alarm_timing.d
+RTC Clock/src/alarm_timing/alarm_timing/Debug/alarm_timing.eep
+RTC Clock/src/alarm_timing/alarm_timing/Debug/alarm_timing.elf
+RTC Clock/src/alarm_timing/alarm_timing/Debug/alarm_timing.hex
+RTC Clock/src/alarm_timing/alarm_timing/Debug/alarm_timing.lss
+RTC Clock/src/alarm_timing/alarm_timing/Debug/alarm_timing.map
+RTC Clock/src/alarm_timing/alarm_timing/Debug/Alarm_timing.o
+RTC Clock/src/alarm_timing/alarm_timing/Debug/alarm_timing.srec
+RTC Clock/src/alarm_timing/alarm_timing/Debug/main.d
+RTC Clock/src/alarm_timing/alarm_timing/Debug/main.o
+RTC Clock/src/alarm_timing/alarm_timing/Debug/makedep.mk
+RTC Clock/src/alarm_timing/alarm_timing/Debug/Makefile
