@@ -303,10 +303,18 @@ void Alarm::ring()
 
 // Common function definitions
 
+// Reverse the order of a byte
+unsigned char reverse(unsigned char b) {
+	b = (b & 0xF0) >> 4 | (b & 0x0F) << 4;
+	b = (b & 0xCC) >> 2 | (b & 0x33) << 2;
+	b = (b & 0xAA) >> 1 | (b & 0x55) << 1;
+	return b;
+}
+
 int read_digit()
 {
-	int bit_input = PINB;
-	int number = bit_input & (0b00111111); // remove bit 6 and 7
+	int bit_input = BitPin % (0b00111111);
+	int number = reverse(bit_input<<2); // manupulating the input to obtain the integer
 	return number;
 }
 

@@ -18,16 +18,10 @@
 #define AlarmRingLED PIND1
 #define SetTimeLED PIND2
 #define SetAlarmLED PIND3
-#define SetHourLED PIND4
-#define SetMinuteLED PIND5
+#define SetHourLED PIND5
+#define SetMinuteLED PIND4
 
-// Bits for number reading
-#define Bit1 PINB0
-#define Bit2 PINB1
-#define Bit3 PINB2
-#define Bit4 PINB3
-#define Bit5 PINB4
-#define Bit6 PINB5
+#define BitPin PINB
 
 // Switches for mode selection
 #define SetTime PINC0
@@ -88,6 +82,7 @@ public:
 };
 
 // Function  prototypes
+unsigned char reverse(unsigned char b);
 int read_digit();
 void Alarm_timing_init();
 void Alarm_timing_set_time(DS3231 rtc);
