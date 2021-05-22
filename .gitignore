@@ -21,3 +21,46 @@ RTC Clock/src/alarm_timing/alarm_timing/Debug/main.d
 RTC Clock/src/alarm_timing/alarm_timing/Debug/main.o
 RTC Clock/src/alarm_timing/alarm_timing/Debug/makedep.mk
 RTC Clock/src/alarm_timing/alarm_timing/Debug/Makefile
+RTC Clock/enclosure/Base.SLDPRT
+RTC Clock/enclosure/Enclosure.SLDASM
+RTC Clock/enclosure/PCB.SLDASM
+RTC Clock/enclosure/pcb.SLDPRT
+RTC Clock/enclosure/Sidewall 1.SLDPRT
+RTC Clock/enclosure/Sidewall 2.SLDPRT
+RTC Clock/enclosure/~$Base.SLDPRT
+RTC Clock/enclosure/~$Enclosure.SLDASM
+RTC Clock/enclosure/~$pcb.SLDPRT
+RTC Clock/enclosure/~$Sidewall 1.SLDPRT
+RTC Clock/enclosure/~$Sidewall 2.SLDPRT
+RTC Clock/pcb design/alarm_timing/__Previews/alarm_timing.SchDocPreview
+RTC Clock/pcb design/alarm_timing/__Previews/DS3231.SchDocPreview
+RTC Clock/pcb design/alarm_timing/__Previews/Sheet1.SchDocPreview
+RTC Clock/pcb design/alarm_timing/alarm_timing v1/alarm_timing-macro.APR_LIB
+RTC Clock/pcb design/alarm_timing/alarm_timing v1/alarm_timing-RoundHoles.TXT
+RTC Clock/pcb design/alarm_timing/alarm_timing v1/alarm_timing-SlotHoles.TXT
+RTC Clock/pcb design/alarm_timing/alarm_timing v1/alarm_timing.apr
+RTC Clock/pcb design/alarm_timing/alarm_timing v1/alarm_timing.DRR
+RTC Clock/pcb design/alarm_timing/alarm_timing v1/alarm_timing.EXTREP
+RTC Clock/pcb design/alarm_timing/alarm_timing v1/alarm_timing.GBL
+RTC Clock/pcb design/alarm_timing/alarm_timing v1/alarm_timing.GBO
+RTC Clock/pcb design/alarm_timing/alarm_timing v1/alarm_timing.GBS
+RTC Clock/pcb design/alarm_timing/alarm_timing v1/alarm_timing.GKO
+RTC Clock/pcb design/alarm_timing/alarm_timing v1/alarm_timing.GM1
+RTC Clock/pcb design/alarm_timing/alarm_timing v1/alarm_timing.GTL
+RTC Clock/pcb design/alarm_timing/alarm_timing v1/alarm_timing.GTS
+*.GTO
+*.LDP
+*.REP
+*.RUL
+*.drc
+RTC Clock/pcb design/alarm_timing/alarm_timing v1/Design Rule Check - alarm_timing.html
+RTC Clock/pcb design/alarm_timing/alarm_timing v1/Status Report.Txt
+RTC Clock/pcb design/alarm_timing/alarm_timing.PcbDoc
+RTC Clock/pcb design/alarm_timing/alarm_timing.PrjPcb
+RTC Clock/pcb design/alarm_timing/alarm_timing.PrjPcbStructure
+RTC Clock/pcb design/alarm_timing/alarm_timing.SchDoc
+*.Cam
+*.SchDoc
+RTC Clock/pcb design/alarm_timing/Job1.OutJob
+RTC Clock/pcb design/alarm_timing/Project Logs for alarm_timing/alarm_timing PCB ECO 5-8-2021 11-05-03 PM.LOG
+*.LOG
