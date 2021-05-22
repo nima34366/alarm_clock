@@ -1,4 +1,3 @@
-# Files of enclosure design
-
-Follow the below Google Drive Link for the enclosure design
-https://drive.google.com/drive/folders/1xCV1KHoyccNSnnRpfP6kXlsKEZ-y3zoD?usp=sharing
+This Folder contains the design files of the Enclosure.\
+All the Solidworks files can be accessed through the following link.\
+https://drive.google.com/drive/folders/11zQsuTPlsv7nsFcpykirxAldbuCoP8ur?usp=sharing
