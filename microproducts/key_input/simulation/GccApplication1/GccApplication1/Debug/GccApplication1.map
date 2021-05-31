@@ -177,7 +177,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x268
+.text           0x00000000      0x27a
  *(.vectors)
  .vectors       0x00000000       0x68 D:/atmel/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega328p/avr5/crtatmega328p.o
                 0x00000000                __vector_default
@@ -262,15 +262,15 @@ END GROUP
                 0x0000008c                __vector_20
                 0x00000090                . = ALIGN (0x2)
  *(.text.*)
- .text.keypd    0x00000090      0x1c6 main.o
+ .text.keypd    0x00000090       0x2a main.o
                 0x00000090                keypd
- .text.main     0x00000256        0xe main.o
-                0x00000256                main
-                0x00000264                . = ALIGN (0x2)
+ .text.main     0x000000ba      0x1bc main.o
+                0x000000ba                main
+                0x00000276                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00000264        0x0 d:/atmel/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
-                0x00000264                _exit
-                0x00000264                exit
+ .fini9         0x00000276        0x0 d:/atmel/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+                0x00000276                _exit
+                0x00000276                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -289,11 +289,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00000264        0x4 d:/atmel/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+ .fini0         0x00000276        0x4 d:/atmel/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x00000268                _etext = .
+                0x0000027a                _etext = .
 
-.data           0x00800100        0x0 load address 0x00000268
+.data           0x00800100        0x0 load address 0x0000027a
                 [!provide]                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -314,8 +314,8 @@ END GROUP
                 0x00800100                key1
                 0x00800102                key2
                 0x00800104                PROVIDE (__bss_end, .)
-                0x00000268                __data_load_start = LOADADDR (.data)
-                0x00000268                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x0000027a                __data_load_start = LOADADDR (.data)
+                0x0000027a                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800104        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
@@ -394,20 +394,20 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000      0x748
+.debug_info     0x00000000      0x795
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x5f4 D:/atmel/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_info    0x000005f4      0x154 main.o
+ .debug_info    0x000005f4      0x1a1 main.o
 
-.debug_abbrev   0x00000000      0x694
+.debug_abbrev   0x00000000      0x6cd
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x5a2 D:/atmel/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_abbrev  0x000005a2       0xf2 main.o
+ .debug_abbrev  0x000005a2      0x12b main.o
 
-.debug_line     0x00000000      0x301
+.debug_line     0x00000000      0x309
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x134 D:/atmel/7.0/Packs/atmel/ATmega_DFP/1.6.364/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_line    0x00000134      0x1cd main.o
+ .debug_line    0x00000134      0x1d5 main.o
 
 .debug_frame    0x00000000       0x34
  *(.debug_frame)
@@ -419,9 +419,9 @@ END GROUP
  .debug_str     0x00000208      0x1da main.o
                                 0x20e (size before relaxing)
 
-.debug_loc      0x00000000       0x48
+.debug_loc      0x00000000       0x70
  *(.debug_loc)
- .debug_loc     0x00000000       0x48 main.o
+ .debug_loc     0x00000000       0x70 main.o
 
 .debug_macinfo
  *(.debug_macinfo)
