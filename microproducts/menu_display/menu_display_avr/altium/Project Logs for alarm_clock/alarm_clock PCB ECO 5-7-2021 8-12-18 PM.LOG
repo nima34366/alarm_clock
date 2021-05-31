@@ -1,0 +1,11 @@
+Added Component: Designator=MTH1(MTH)
+Added Component: Designator=MTH2(MTH)
+Added Component: Designator=MTH3(MTH)
+Added Component: Designator=MTH4(MTH)
+Added Component: Designator=MTH5(MTH)
+Added Member To Class: ClassName=alarm_clock Member=Component MTH1
+Added Member To Class: ClassName=alarm_clock Member=Component MTH2
+Added Member To Class: ClassName=alarm_clock Member=Component MTH3
+Added Member To Class: ClassName=alarm_clock Member=Component MTH4
+Added Member To Class: ClassName=alarm_clock Member=Component MTH5
+Added Room: Name=alarm_clock
