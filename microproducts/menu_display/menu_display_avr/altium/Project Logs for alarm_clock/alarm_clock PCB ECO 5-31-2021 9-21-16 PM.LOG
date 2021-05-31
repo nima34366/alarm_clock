@@ -1,0 +1,20 @@
+Removed Pin From Net: NetName=NetLCD_11 Pin=U1-2
+Removed Pin From Net: NetName=NetLCD_12 Pin=U1-3
+Removed Pin From Net: NetName=NetLCD_13 Pin=U1-4
+Removed Pin From Net: NetName=NetLCD_14 Pin=U1-5
+Removed Pin From Net: NetName=NetLCD_4 Pin=U1-6
+Removed Pin From Net: NetName=NetLCD_6 Pin=U1-12
+Removed Pin From Net: NetName=NetSW1_1 Pin=U1-14
+Removed Pin From Net: NetName=NetSW2_1 Pin=U1-15
+Removed Pin From Net: NetName=NetSW3_1 Pin=U1-16
+Added Pin To Net: NetName=NetLCD_2 Pin=LCD-5
+Added Pin To Net: NetName=NetLCD_13 Pin=U1-9
+Added Pin To Net: NetName=NetLCD_14 Pin=U1-10
+Added Pin To Net: NetName=NetLCD_4 Pin=U1-14
+Added Pin To Net: NetName=NetLCD_6 Pin=U1-15
+Added Pin To Net: NetName=NetLCD_11 Pin=U1-18
+Added Pin To Net: NetName=NetLCD_12 Pin=U1-19
+Added Pin To Net: NetName=NetSW1_1 Pin=U1-23
+Added Pin To Net: NetName=NetSW2_1 Pin=U1-24
+Added Pin To Net: NetName=NetSW3_1 Pin=U1-25
+Added Room: Name=alarm_clock
