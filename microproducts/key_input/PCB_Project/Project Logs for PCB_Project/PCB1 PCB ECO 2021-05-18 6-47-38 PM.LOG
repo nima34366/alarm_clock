@@ -1,0 +1,8 @@
+Added Component: Designator=U2(keypad 4*4)
+Added Pin To Net: NetName=C1 Pin=U2-C1
+Added Pin To Net: NetName=C2 Pin=U2-C2
+Added Pin To Net: NetName=C3 Pin=U2-C3
+Added Pin To Net: NetName=R1 Pin=U2-R1
+Added Pin To Net: NetName=R2 Pin=U2-R2
+Added Pin To Net: NetName=R3 Pin=U2-R3
+Added Member To Class: ClassName=Sheet1 Member=Component U2 keypad 4*3

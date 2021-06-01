@@ -1,0 +1,7 @@
+Change Net Name : Old Net Name=9V New Net Name=NetC1_2
+Change Net Name : Old Net Name=NetC2_2 New Net Name=VCC
+Added Member To Class: ClassName=Sheet1 Member=Component D1 L-53GD
+Added Member To Class: ClassName=Sheet1 Member=Component D2 L-53GD
+Added Member To Class: ClassName=Sheet1 Member=Component D4 L-53GD
+Added Member To Class: ClassName=Sheet1 Member=Component D6 L-53GD
+Added Member To Class: ClassName=Sheet1 Member=Component D8 L-53GD
