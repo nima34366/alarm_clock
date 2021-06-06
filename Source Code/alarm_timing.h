@@ -44,7 +44,7 @@ class DS3231
 	void	setDate(uint8_t date, uint8_t mon, uint16_t year);		// to set date in the rtc
 	char	*getTimeStr();											// to get time as a string in "hh:mm" format
 	char	*getDateStr(char divider='/');							// to get date as a string in format "dd/mm/yyyy"
-`
+
 	private:
 	uint8_t _scl_pin;
 	uint8_t _sda_pin;
@@ -52,7 +52,6 @@ class DS3231
 
 	
 	void	_burstRead();
-	uint8_t	_readRegister(uint8_t reg);
 	void 	_writeRegister(uint8_t reg, uint8_t value);
 	uint8_t	_decode(uint8_t value);
 	uint8_t	_decodeH(uint8_t value);
