@@ -52,7 +52,6 @@ class DS3231
 
 	
 	void	_burstRead();
-	uint8_t	_readRegister(uint8_t reg);
 	void 	_writeRegister(uint8_t reg, uint8_t value);
 	uint8_t	_decode(uint8_t value);
 	uint8_t	_decodeH(uint8_t value);
