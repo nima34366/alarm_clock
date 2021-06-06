@@ -6,7 +6,7 @@
  */ 
 
 #ifndef F_CPU
-#define F_CPU 1000000UL
+#define F_CPU 16000000UL
 #endif
 
 #include "Alarm_timing.h"
@@ -193,7 +193,7 @@ char *DS3231::getTimeStr()
 char *DS3231::getDateStr(char divider)
 {
 	static char output[] = "xxxxxxxxxx";	// initializing char array
-	int yr, offset;
+	int yr;
 	Time t;
 	t=getTime();
 	
@@ -264,7 +264,7 @@ Alarm::Alarm()
 	this->hour = 0;
 	this->minute = 0;
 	this->active = 0;
-	this->tone = harry_potter;	// default tone
+	this->tone = Tones();	// default tone
 }
 
 // Public functions
@@ -286,7 +286,7 @@ void Alarm::ring()
 {
 	LCD_Ringing();
 	Tones alarm_tone = this->tone;
-	alarm_tone.audio_play()
+	alarm_tone.audio_play();
 	
 	// Done ringing
 	this->active = 0;
@@ -312,7 +312,7 @@ void timing_set_time(DS3231 rtc)
 	// read digit 1 of hour
 	LCD_SetTime_H1();
 	h1 = Keypad_read();
-	else if (h1==20)			// input == 20 --> Back
+	if (h1==20)			// input == 20 --> Back
 	{
 		return;
 	}
@@ -353,17 +353,23 @@ void timing_set_time(DS3231 rtc)
 		confirm = Keypad_read();
 	}
 	
-	if (confirm == 10)			// Set
+	if (confirm == 10){
 		//setting the time
 		time_h = h1*10+h2;
 		time_m = m1*10+m2;
-		if (!((0 <= time_h <= 24) && (0 <= time_m <=60))){		// if the inputed numbers of time are invalid
+		if (!(((0 <= time_h) && (time_h <= 24)) && ((0 <= time_m) && (time_m <=60)))){		// if the inputs are invalid
 			LCD_Invalidinput();
 			_delay_ms(1000);
-			timing_set_time(rtc);		// Recall Set Time function
+			timing_set_time(rtc);
 			return;
 		}
-		rtc.setTime(time_h,time_m,0);	// Set Time in the RTC
+		rtc.setTime(time_h,time_m,0);		// Set Time in the RTC
+	}
+	else if (confirm == 20)
+	{
+		timing_set_date(rtc);
+		return;
+	}
 }
 
 void timing_set_date(DS3231 rtc)
@@ -377,7 +383,7 @@ void timing_set_date(DS3231 rtc)
 	
 	LCD_SetDate_Y1();	
 	y1 = Keypad_read();
-	else if (y1==20)	// Back
+	if (y1==20)	// Back
 	{
 		return;
 	}
@@ -394,7 +400,7 @@ void timing_set_date(DS3231 rtc)
 	m1 = Keypad_read();
 	if (m1==20)			// Reset
 	{
-		timing_set_alarm(rtc);
+		timing_set_date(rtc);
 		return;
 	}
 	
@@ -402,7 +408,7 @@ void timing_set_date(DS3231 rtc)
 	m2 = Keypad_read();
 	if (m2==20)			// Reset
 	{
-		timing_set_alarm(rtc);
+		timing_set_date(rtc);
 		return;
 	}
 	
@@ -410,7 +416,7 @@ void timing_set_date(DS3231 rtc)
 	d1 = Keypad_read();
 	if (d1==20)			// Reset
 	{
-		timing_set_alarm(rtc);
+		timing_set_date(rtc);
 		return;
 	}
 	
@@ -418,7 +424,7 @@ void timing_set_date(DS3231 rtc)
 	d2 = Keypad_read();	
 	if (d2==20)			// Reset
 	{
-		timing_set_alarm(rtc);
+		timing_set_date(rtc);
 		return;
 	}
 	
@@ -434,19 +440,20 @@ void timing_set_date(DS3231 rtc)
 		confirm = Keypad_read();
 	}
 	
-	if (confirm == 10)		// Set
-	//setting the time
-	year = 2000 + y1*10 + y2;
-	month = m1*10 + m2;
-	day = d1*10 + d2;
+	if (confirm == 10){		// Set
+		//setting the date
+		year = 2000 + y1*10 + y2;
+		month = m1*10 + m2;
+		day = d1*10 + d2;
 	
-	if (!((0 <= month <= 12) && (0 <= day <= 31))){		// if the inputs are invalid
-		LCD_Invalidinput();
-		_delay_ms(1000);
-		timing_set_date(rtc);		// Recall Set Date function again
-		return;
+		if (!(((0 <= month) && (month <= 12)) && ((0 <= day) && (day <= 31)))){		// if the inputs are invalid
+			LCD_Invalidinput();
+			_delay_ms(1000);
+			timing_set_date(rtc);		// Recall Set Date function again
+			return;
+		}
+		rtc.setDate(day,month,year);
 	}
-	rtc.setDate(day,month,year);
 	else if (confirm == 20)	// Reset
 	{
 		timing_set_date(rtc);
@@ -465,7 +472,7 @@ void timing_set_alarm(Alarm alarm)
 	
 	LCD_SetTime_H1();
 	h1 = Keypad_read();
-	else if (h1==20)
+	if (h1==20)
 	{
 		return;
 	}	
@@ -505,17 +512,18 @@ void timing_set_alarm(Alarm alarm)
 		confirm = Keypad_read();
 	}
 	
-	if (confirm == 10)
+	if (confirm == 10){
 		//setting the time
 		h = h1*10+h2;
 		m = m1*10+m2;
-		if (!((0 <= h <= 24) && (0 <= m <=60))){		// if the inputs are invalid
+		if (!(((0 <= h) && (h <= 24)) && ((0 <= m) && (m <=60)))){		// if the inputs are invalid
 			LCD_Invalidinput();
 			_delay_ms(1000);
 			timing_set_alarm(alarm);
 			return;
 		}
 		alarm.set(h,m);
+	}
 	else if (confirm == 20)
 	{
 		timing_set_alarm(alarm);
