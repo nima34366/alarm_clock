@@ -73,6 +73,7 @@ public:
 	void del();														// delete the instance of alarm by setting active->0
 	void ring();													// ring the alarm
 	void set_tone(Tones tone);										// set a tone for the alarm
+	const char *getAlarmStr();										// get the alarm as a string
 };
 
 // Function  prototypes

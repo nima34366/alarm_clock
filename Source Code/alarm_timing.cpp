@@ -9,7 +9,7 @@
 #define F_CPU 16000000UL
 #endif
 
-#include "Alarm_timing.h"
+#include "alarm_timing.h"
 #include <avr/io.h>
 #include <util/delay.h>
 #include <stdint.h>
@@ -295,6 +295,48 @@ void Alarm::ring()
 void Alarm::set_tone(Tones tone_selected)
 {
 	this->tone = tone_selected;
+}
+
+const char *Alarm::getAlarmStr()
+{	
+	char *output;
+	// if the alarm is active ,  the string will be in format "HH:MM"
+	if (this->active == 1)
+	{
+		char *output = "xx:xx";
+		int hour = this->hour;
+		int minute = this->minute;
+		
+		// convert hour to string
+		if (hour < 10)
+		{
+			output[0] = 48;
+		}
+		else
+		{
+			output[0] = char((hour / 10) + 48);
+		}
+		output[1] = char((hour % 10) + 48);
+		
+		// convert minute to string
+		if (minute < 10)
+		{
+			output[3] = 48;
+		}
+		else
+		{
+			output[3] = char((minute / 10) + 48);
+		}
+		output[4] = char((minute % 10) + 48);
+	}
+	
+	// not an active alarm ,  the string will be 'ADD'
+	else 
+	{
+		char *output = "ADD";
+	}
+	
+	return output;
 }
 
 /////////////////////////////////////////////////////////////
