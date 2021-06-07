@@ -22,7 +22,11 @@
 #define RS PB0				/* Define Register Select pin */
 #define EN PB1 				/* Define Enable signal pin */
 
-
+const char *int_string(int a,char b[])
+{
+	sprintf(b,"%d",a);
+	return b;
+}
 
 void LCD_Command( unsigned char cmnd )
 {
@@ -186,8 +190,10 @@ void LCD_SetTime_H1()
 	LCD_String_xy(1,9,"B>BACK");
 }
 
-void LCD_SetTime_H2(const char *H1)
+void LCD_SetTime_H2(int h1)
 {
+	char H1[5]="";
+	sprintf(H1,"%d",h1);
 	LCD_Clear();
 	char time[10]="";
 	strcat(time,H1);
@@ -198,8 +204,12 @@ void LCD_SetTime_H2(const char *H1)
 }
 
 
-void LCD_SetTime_M1(const char *H1,const char *H2)
+void LCD_SetTime_M1(int h1,int h2)
 {
+	char H1[5]="";
+	char H2[5]="";
+	sprintf(H1,"%d",h1);
+	sprintf(H2,"%d",h2);
 	LCD_Clear();
 	char time[10]="";
 	strcat(time,H1);
@@ -210,8 +220,14 @@ void LCD_SetTime_M1(const char *H1,const char *H2)
 	LCD_String_xy(1,9,"B>RESET");
 }
 
-void LCD_SetTime_M2(const char *H1,const char *H2,const char *M1)
+void LCD_SetTime_M2(int h1,int h2,int m1)
 {
+	char H1[5]="";
+	char H2[5]="";
+	char M1[5]="";
+	sprintf(H1,"%d",h1);
+	sprintf(H2,"%d",h2);
+	sprintf(M1,"%d",m1);
 	LCD_Clear();
 	char time[10]="";
 	strcat(time,H1);
@@ -224,8 +240,16 @@ void LCD_SetTime_M2(const char *H1,const char *H2,const char *M1)
 	LCD_String_xy(1,9,"B>RESET");
 }
 
-void LCD_SetTime_Final(const char *H1,const char *H2,const char *M1,const char *M2)
+void LCD_SetTime_Final(int h1,int h2,int m1,int m2)
 {
+	char H1[5]="";
+	char H2[5]="";
+	char M1[5]="";
+	char M2[5]="";
+	sprintf(H1,"%d",h1);
+	sprintf(H2,"%d",h2);
+	sprintf(M1,"%d",m1);
+	sprintf(M2,"%d",m2);
 	LCD_Clear();
 	char time[10]="";
 	strcat(time,H1);
@@ -250,8 +274,10 @@ void LCD_SetDate_Y1()
 	LCD_String_xy(1,9,"B>BACK");
 }
 
-void LCD_SetDate_Y2(const char *Y1)
+void LCD_SetDate_Y2(int y1)
 {
+	char Y1[5]="";
+	sprintf(Y1,"%d",y1);
 	LCD_Clear();
 	char date[10]="";
 	strcat(date,Y1);
@@ -261,8 +287,12 @@ void LCD_SetDate_Y2(const char *Y1)
 	LCD_String_xy(1,9,"B>RESET");
 }
 
-void LCD_SetDate_M1(const char *Y1,const char *Y2)
+void LCD_SetDate_M1(int y1,int y2)
 {
+	char Y1[5]="";
+	char Y2[5]="";
+	sprintf(Y1,"%d",y1);
+	sprintf(Y2,"%d",y2);
 	LCD_Clear();
 	char date[10]="";
 	strcat(date,Y1);
@@ -273,8 +303,14 @@ void LCD_SetDate_M1(const char *Y1,const char *Y2)
 	LCD_String_xy(1,9,"B>RESET");
 }
 
-void LCD_SetDate_M2(const char *Y1,const char *Y2,const char *M1)
+void LCD_SetDate_M2(int y1,int y2,int m1)
 {
+	char Y1[5]="";
+	char Y2[5]="";
+	char M1[5]="";
+	sprintf(Y1,"%d",y1);
+	sprintf(Y2,"%d",y2);
+	sprintf(M1,"%d",m1);
 	LCD_Clear();
 	char date[10]="";
 	strcat(date,Y1);
@@ -287,8 +323,16 @@ void LCD_SetDate_M2(const char *Y1,const char *Y2,const char *M1)
 	LCD_String_xy(1,9,"B>RESET");
 }
 
-void LCD_SetDate_D1(const char *Y1,const char *Y2,const char *M1,const char *M2)
+void LCD_SetDate_D1(int y1,int y2,int m1,int m2)
 {
+	char Y1[5]="";
+	char Y2[5]="";
+	char M1[5]="";
+	char M2[5]="";
+	sprintf(Y1,"%d",y1);
+	sprintf(Y2,"%d",y2);
+	sprintf(M1,"%d",m1);
+	sprintf(M2,"%d",m2);
 	LCD_Clear();
 	char date[10]="";
 	strcat(date,Y1);
@@ -302,8 +346,18 @@ void LCD_SetDate_D1(const char *Y1,const char *Y2,const char *M1,const char *M2)
 	LCD_String_xy(1,9,"B>RESET");
 }
 
-void LCD_SetDate_D2(const char *Y1,const char *Y2,const char *M1,const char *M2,const char *D1)
+void LCD_SetDate_D2(int y1,int y2,int m1,int m2,int d1)
 {
+	char Y1[5]="";
+	char Y2[5]="";
+	char M1[5]="";
+	char M2[5]="";
+	char D1[5]="";
+	sprintf(Y1,"%d",y1);
+	sprintf(Y2,"%d",y2);
+	sprintf(M1,"%d",m1);
+	sprintf(M2,"%d",m2);
+	sprintf(D1,"%d",d1);
 	LCD_Clear();
 	char date[10]="";
 	strcat(date,Y1);
@@ -319,8 +373,20 @@ void LCD_SetDate_D2(const char *Y1,const char *Y2,const char *M1,const char *M2,
 	LCD_String_xy(1,9,"B>RESET");
 }
 
-void LCD_SetDate_Final(const char *Y1,const char *Y2,const char *M1,const char *M2,const char *D1,const char *D2)
+void LCD_SetDate_Final(int y1,int y2,int m1,int m2,int d1,int d2)
 {
+	char Y1[5]="";
+	char Y2[5]="";
+	char M1[5]="";
+	char M2[5]="";
+	char D1[5]="";
+	char D2[5]="";
+	sprintf(Y1,"%d",y1);
+	sprintf(Y2,"%d",y2);
+	sprintf(M1,"%d",m1);
+	sprintf(M2,"%d",m2);
+	sprintf(D1,"%d",d1);
+	sprintf(D2,"%d",d2);
 	LCD_Clear();
 	char date[10]="";
 	strcat(date,Y1);

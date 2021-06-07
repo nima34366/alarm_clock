@@ -1,12 +1,15 @@
-
 /*
  * audio_output.h
  *
  * Created: 6/5/2021 7:48:23 PM
  *  Author: User
  */ 
-#define audio_output_h
+#ifndef AUDIO_OUTPUT_H_
+#define AUDIO_OUTPUT_H_
+
+#ifndef F_CPU
 #define F_CPU 16000000UL
+#endif
 #define __DELAY_BACKWARD_COMPATIBLE__
 #include <avr/io.h>
 #include <util/delay.h>
@@ -33,4 +36,7 @@ class Tones
 	void audio_play();
 	
 };
+
+#endif
+
 
