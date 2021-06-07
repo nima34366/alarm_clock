@@ -1,3 +1,6 @@
+#ifndef TONES_H_
+#define TONES_H_
+
 #include "notes.h"
 
 /*greendleaves*/
@@ -58,3 +61,5 @@ NOTE_AS4,NOTE_D5,NOTE_AS4,NOTE_D5,NOTE_AS4,NOTE_F5,NOTE_E5,NOTE_DS5,NOTE_B4,NOTE
 int harry_potter_notes_durations[]={2,4,-4,8,4,2,4,-2,-2,-4,8,4,2,4,-1,4,-4,8,4,2,4,2,4,2,4,-4,8,4,2,4,-1,4,2,
 4,2,4,2,4,2,4,-4,8,4,2,4,-1,4,4,2,4,2,4,2,4,2,4,-4,8,4,2,4,-1};
 int harry_potter_notes_length = sizeof(harry_potter_notes) / sizeof(harry_potter_notes[0]) ;
+
+#endif
