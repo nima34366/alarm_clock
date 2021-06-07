@@ -15,20 +15,20 @@
 ////////////////////////////////////////////////////////
 
 #include <string.h>
-
+#include <stdio.h>
 
 #define LCD_Dir  DDRB			/* Define LCD data port direction */
 #define LCD_Port PORTB			/* Define LCD data port */
 #define RS PB0				/* Define Register Select pin */
 #define EN PB1 				/* Define Enable signal pin */
 
-const char *int_string(int a,char b[])
+inline const char *int_string(int a,char b[])
 {
 	sprintf(b,"%d",a);
 	return b;
 }
 
-void LCD_Command( unsigned char cmnd )
+inline void LCD_Command( unsigned char cmnd )
 {
 	LCD_Port = (LCD_Port & 0x0F) | (cmnd & 0xF0); /* sending upper nibble */
 	LCD_Port &= ~ (1<<RS);		/* RS=0, command reg. */
@@ -46,7 +46,7 @@ void LCD_Command( unsigned char cmnd )
 }
 
 
-void LCD_Char( unsigned char data )
+inline void LCD_Char( unsigned char data )
 {
 	LCD_Port = (LCD_Port & 0x0F) | (data & 0xF0); /* sending upper nibble */
 	LCD_Port |= (1<<RS);		/* RS=1, data reg. */
@@ -63,7 +63,7 @@ void LCD_Char( unsigned char data )
 	_delay_ms(2);
 }
 
-void LCD_Init (void)			/* LCD Initialize function */
+inline void LCD_Init (void)			/* LCD Initialize function */
 {
 	LCD_Dir = 0xFF;			/* Make LCD port direction as o/p */
 	_delay_ms(20);			/* LCD Power ON delay always >15ms */
@@ -77,7 +77,7 @@ void LCD_Init (void)			/* LCD Initialize function */
 }
 
 
-void LCD_String (const char* str)		/* Send string to LCD function */
+inline void LCD_String (const char* str)		/* Send string to LCD function */
 {
 	int i;
 	for(i=0;str[i]!=0;i++)		/* Send each char of string till the NULL */
@@ -86,7 +86,7 @@ void LCD_String (const char* str)		/* Send string to LCD function */
 	}
 }
 
-void LCD_String_xy (char row, char pos,const char *str)	/* Send string to LCD with xy position */
+inline void LCD_String_xy (char row, char pos,const char *str)	/* Send string to LCD with xy position */
 {
 	if (row == 0 && pos<16)
 	LCD_Command((pos & 0x0F)|0x80);	/* Command of first row and required position<16 */
@@ -95,7 +95,7 @@ void LCD_String_xy (char row, char pos,const char *str)	/* Send string to LCD wi
 	LCD_String(str);		/* Call LCD string function */
 }
 
-void LCD_Clear()
+inline void LCD_Clear()
 {
 	LCD_Command (0x01);		/* Clear display */
 	_delay_ms(2);
@@ -106,14 +106,14 @@ void LCD_Clear()
 //CENTRAL FUNCTIONS//
 /////////////////////
 
-void LCD_Home(const char *Time,const char *Date)
+inline void LCD_Home(const char *Time,const char *Date)
 {
 	LCD_Clear();
 	LCD_String_xy(0,6,Time);
 	LCD_String_xy(1,4,Date);
 }
 
-void LCD_Menu()
+inline void LCD_Menu()
 {
 	LCD_Clear();
 	LCD_String_xy(0,0,"1>D&T");
@@ -122,13 +122,13 @@ void LCD_Menu()
 	LCD_String_xy(1,8,"4>BACK");
 }
 
-void LCD_Invalidinput()
+inline void LCD_Invalidinput()
 {
 	LCD_Clear();
 	LCD_String_xy(0,1,"INVALID INPUT");
 }
 
-void LCD_SetTimeMenu()
+inline void LCD_SetTimeMenu()
 {
 	LCD_Clear();
 	LCD_String_xy(0,0,"1>TIME");
@@ -136,7 +136,7 @@ void LCD_SetTimeMenu()
 	LCD_String_xy(1,0,"3>BACK");
 }
 
-void LCD_AlarmList(const char *alarms[4]) // Insert in array of "00:00"
+inline void LCD_AlarmList(const char *alarms[4]) // Insert in array of "00:00"
 {
 	LCD_Clear();
 	char alarm0[10]= "1>";
@@ -153,7 +153,7 @@ void LCD_AlarmList(const char *alarms[4]) // Insert in array of "00:00"
 	LCD_String_xy(1,8,alarm3);
 }
 
-void LCD_AlarmMenu()
+inline void LCD_AlarmMenu()
 {
 	LCD_Clear();
 	LCD_String_xy(0,0,"1>SET");
@@ -162,7 +162,7 @@ void LCD_AlarmMenu()
 	LCD_String_xy(1,8,"4>BACK");
 }
 
-void LCD_Tone()
+inline void LCD_Tone()
 {
 	LCD_Clear();
 	LCD_String_xy(0,0,"1>STARW");
@@ -171,7 +171,7 @@ void LCD_Tone()
 	LCD_String_xy(1,8,"4>GREENL");
 }
 
-void LCD_Ringing()
+inline void LCD_Ringing()
 {
 	LCD_Clear();
 	LCD_String_xy(0,6,"WAKE");
@@ -182,7 +182,7 @@ void LCD_Ringing()
 //SETTING TIME//
 ////////////////
 
-void LCD_SetTime_H1()
+inline void LCD_SetTime_H1()
 {
 	LCD_Clear();
 	LCD_String_xy(0,0,"HH:MM");
@@ -190,7 +190,7 @@ void LCD_SetTime_H1()
 	LCD_String_xy(1,9,"B>BACK");
 }
 
-void LCD_SetTime_H2(int h1)
+inline void LCD_SetTime_H2(int h1)
 {
 	char H1[5]="";
 	sprintf(H1,"%d",h1);
@@ -204,7 +204,7 @@ void LCD_SetTime_H2(int h1)
 }
 
 
-void LCD_SetTime_M1(int h1,int h2)
+inline void LCD_SetTime_M1(int h1,int h2)
 {
 	char H1[5]="";
 	char H2[5]="";
@@ -220,7 +220,7 @@ void LCD_SetTime_M1(int h1,int h2)
 	LCD_String_xy(1,9,"B>RESET");
 }
 
-void LCD_SetTime_M2(int h1,int h2,int m1)
+inline void LCD_SetTime_M2(int h1,int h2,int m1)
 {
 	char H1[5]="";
 	char H2[5]="";
@@ -240,7 +240,7 @@ void LCD_SetTime_M2(int h1,int h2,int m1)
 	LCD_String_xy(1,9,"B>RESET");
 }
 
-void LCD_SetTime_Final(int h1,int h2,int m1,int m2)
+inline void LCD_SetTime_Final(int h1,int h2,int m1,int m2)
 {
 	char H1[5]="";
 	char H2[5]="";
@@ -266,7 +266,7 @@ void LCD_SetTime_Final(int h1,int h2,int m1,int m2)
 //SETTING DATE//
 ////////////////
 
-void LCD_SetDate_Y1()
+inline void LCD_SetDate_Y1()
 {
 	LCD_Clear();
 	LCD_String_xy(0,0,"YY/MM/DD");
@@ -274,7 +274,7 @@ void LCD_SetDate_Y1()
 	LCD_String_xy(1,9,"B>BACK");
 }
 
-void LCD_SetDate_Y2(int y1)
+inline void LCD_SetDate_Y2(int y1)
 {
 	char Y1[5]="";
 	sprintf(Y1,"%d",y1);
@@ -287,7 +287,7 @@ void LCD_SetDate_Y2(int y1)
 	LCD_String_xy(1,9,"B>RESET");
 }
 
-void LCD_SetDate_M1(int y1,int y2)
+inline void LCD_SetDate_M1(int y1,int y2)
 {
 	char Y1[5]="";
 	char Y2[5]="";
@@ -303,7 +303,7 @@ void LCD_SetDate_M1(int y1,int y2)
 	LCD_String_xy(1,9,"B>RESET");
 }
 
-void LCD_SetDate_M2(int y1,int y2,int m1)
+inline void LCD_SetDate_M2(int y1,int y2,int m1)
 {
 	char Y1[5]="";
 	char Y2[5]="";
@@ -323,7 +323,7 @@ void LCD_SetDate_M2(int y1,int y2,int m1)
 	LCD_String_xy(1,9,"B>RESET");
 }
 
-void LCD_SetDate_D1(int y1,int y2,int m1,int m2)
+inline void LCD_SetDate_D1(int y1,int y2,int m1,int m2)
 {
 	char Y1[5]="";
 	char Y2[5]="";
@@ -346,7 +346,7 @@ void LCD_SetDate_D1(int y1,int y2,int m1,int m2)
 	LCD_String_xy(1,9,"B>RESET");
 }
 
-void LCD_SetDate_D2(int y1,int y2,int m1,int m2,int d1)
+inline void LCD_SetDate_D2(int y1,int y2,int m1,int m2,int d1)
 {
 	char Y1[5]="";
 	char Y2[5]="";
@@ -373,7 +373,7 @@ void LCD_SetDate_D2(int y1,int y2,int m1,int m2,int d1)
 	LCD_String_xy(1,9,"B>RESET");
 }
 
-void LCD_SetDate_Final(int y1,int y2,int m1,int m2,int d1,int d2)
+inline void LCD_SetDate_Final(int y1,int y2,int m1,int m2,int d1,int d2)
 {
 	char Y1[5]="";
 	char Y2[5]="";
