@@ -2,13 +2,13 @@
 
 Tones::Tones()
 {
-	 notes=harry_potter_notes;
-	 durations=harry_potter_notes_durations;
-	 length=harry_potter_notes_length;
-	 rate=4000;
+	 this->notes=harry_potter_notes;
+	 this->durations=harry_potter_notes_durations;
+	 this->length=harry_potter_notes_length;
+	 this->rate=4000;
 }
 	
-void Tones::play_note(float Note_frequency, float Note_duration)
+void Tones::play_note(float Note_frequency,float Note_duration)
 {
 	long cycles;
 	float complete_period;
@@ -34,6 +34,9 @@ void Tones::play_note(float Note_frequency, float Note_duration)
 }
 void Tones::audio_play()
 {
+	int stop_audio;
+	int check_input_pin;	
+	DDRC &= ~(1 << PIN_STOP_ALARM);
 	while (stop_audio==1)
 	{  //when alarm okay set the variable to 1
 		for (int i = 0; i <  length ; i = i + 1)
@@ -49,33 +52,3 @@ void Tones::audio_play()
 	}
 }
 
-
-int main(void)
-{
-		
-	Tones harry_potter;
-	harry_potter.notes= harry_potter_notes;
-	harry_potter.durations= harry_potter_notes_durations;
-	harry_potter.length=harry_potter_notes_length;
-	harry_potter.rate=4000;
-	
-	Tones game_of_throns;
-	game_of_throns.notes=game_of_throns_notes;
-	game_of_throns.durations=game_of_throns_notes_durations;
-	game_of_throns.length=game_of_throns_notes_length;
-	game_of_throns.rate=12000;
-	
-	Tones starwars;
-	starwars.notes=starwars_notes;
-	starwars.durations=starwars_notes_durations;
-	starwars.length=starwars_notes_length;
-	starwars.rate=6000;
-	
-	Tones greendleves;
-	greendleves.notes=Greendleves_notes;
-	greendleves.durations=game_of_throns_notes_durations;
-	greendleves.length=Greensleves_notes_length;
-	greendleves.rate=6000;
-	
-	
-}

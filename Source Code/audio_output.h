@@ -16,13 +16,9 @@
 #include <stdlib.h>
 #include "notes.h"
 #include "tones.h"
-int stop_audio;
-int check_input_pin;
-float Note_frequency;
-float Note_duration;
 #define PORT PORTC
 #define PIN_SPEAKER_OUT PINC0  //speaker port
-#define PIN_STOP_ALARM PINC2
+#define PIN_STOP_ALARM PINC1
 
 class Tones
 {
@@ -32,11 +28,9 @@ class Tones
 	int *durations;
 	int length;
 	int rate;
-	void play_note(float Note_frequency, float Note_duration);
+	void play_note(float Note_frequency,float Note_duration);
 	void audio_play();
 	
 };
 
 #endif
-
-
