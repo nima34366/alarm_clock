@@ -2,13 +2,13 @@
 
 Tones::Tones()
 {
-	 notes=harry_potter_notes;
-	 durations=harry_potter_notes_durations;
-	 length=harry_potter_notes_length;
-	 rate=4000;
+	 this->notes=harry_potter_notes;
+	 this->durations=harry_potter_notes_durations;
+	 this->length=harry_potter_notes_length;
+	 this->rate=4000;
 }
 	
-inline void Tones::play_note(float Note_frequency,float Note_duration)
+void Tones::play_note(float Note_frequency,float Note_duration)
 {
 	long cycles;
 	float complete_period;
@@ -32,8 +32,11 @@ inline void Tones::play_note(float Note_frequency,float Note_duration)
 		}
 	}
 }
-inline void Tones::audio_play()
+void Tones::audio_play()
 {
+	int stop_audio;
+	int check_input_pin;	
+	DDRC &= ~(1 << PIN_STOP_ALARM);
 	while (stop_audio==1)
 	{  //when alarm okay set the variable to 1
 		for (int i = 0; i <  length ; i = i + 1)
