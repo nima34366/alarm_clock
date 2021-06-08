@@ -10,6 +10,8 @@
 #endif
 
 #include "alarm_timing.h"
+#include "keypad.h"	
+#include "lcd.h"		
 #include <avr/io.h>
 #include <util/delay.h>
 #include <stdint.h>
@@ -184,7 +186,6 @@ char *DS3231::getTimeStr()
 		output[3]=char((t.min / 10)+48);
 		
 	output[4]=char((t.min % 10)+48);
-	output[5]=58;
 	output[5]=0;	// end of string
 	
 	return (char*)&output;
@@ -292,18 +293,61 @@ void Alarm::ring()
 	this->active = 0;
 }
 
-void Alarm::set_tone(Tones tone_selected)
-{
+void Alarm::set_tone()
+{	
+	Tones harry_potter;
+	harry_potter.notes= harry_potter_notes;
+	harry_potter.durations= harry_potter_notes_durations;
+	harry_potter.length=harry_potter_notes_length;
+	harry_potter.rate=4000;
+	
+	Tones game_of_throns;
+	game_of_throns.notes=game_of_throns_notes;
+	game_of_throns.durations=game_of_throns_notes_durations;
+	game_of_throns.length=game_of_throns_notes_length;
+	game_of_throns.rate=12000;
+	
+	Tones starwars;
+	starwars.notes=starwars_notes;
+	starwars.durations=starwars_notes_durations;
+	starwars.length=starwars_notes_length;
+	starwars.rate=6000;
+	
+	Tones greendleves;
+	greendleves.notes=Greendleves_notes;
+	greendleves.durations=game_of_throns_notes_durations;
+	greendleves.length=Greensleves_notes_length;
+	greendleves.rate=600;
+	
+	LCD_Tone();
+	int tone_number = Keypad_read();
+	Tones tone_selected;
+	
+	switch (tone_number)
+	{
+		case 1:
+			tone_selected = harry_potter;
+			break;
+		case 2:
+			tone_selected = game_of_throns;
+			break;
+		case 3:
+			tone_selected = starwars;
+			break;
+		case 4:
+			tone_selected = greendleves;
+			break;
+	}
+	
 	this->tone = tone_selected;
 }
 
-const char *Alarm::getAlarmStr()
+char *Alarm::getAlarmStr()
 {	
-	char *output;
+	static char output[] = "xx:xxx";
 	// if the alarm is active ,  the string will be in format "HH:MM"
 	if (this->active == 1)
 	{
-		char *output = "xx:xx";
 		int hour = this->hour;
 		int minute = this->minute;
 		
@@ -328,15 +372,19 @@ const char *Alarm::getAlarmStr()
 			output[3] = char((minute / 10) + 48);
 		}
 		output[4] = char((minute % 10) + 48);
+		output[5] = 0;
 	}
 	
 	// not an active alarm ,  the string will be 'ADD'
 	else 
 	{
-		char *output = "ADD";
+		output[0] = 65;
+		output[1] = 68;
+		output[2] = 68;
+		output[3] = 0;
 	}
 	
-	return output;
+	return (char*)&output;
 }
 
 /////////////////////////////////////////////////////////////

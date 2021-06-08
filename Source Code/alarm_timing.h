@@ -13,10 +13,7 @@
 #include <util/delay.h>
 #include <stdint.h>
 
-#include "lcd.h"					// LCD Header
 #include "audio_output.h"			// Audio Output Header
-#include "keypad.h"					// Keypad Header
-
 
 // Class for Time
 class Time
@@ -72,8 +69,8 @@ public:
 	void set(int alarm_h,int alarm_m);								// set an alarm
 	void del();														// delete the instance of alarm by setting active->0
 	void ring();													// ring the alarm
-	void set_tone(Tones tone);										// set a tone for the alarm
-	const char *getAlarmStr();										// get the alarm as a string
+	void set_tone();										// set a tone for the alarm
+	char *getAlarmStr();										// get the alarm as a string
 };
 
 // Function  prototypes
