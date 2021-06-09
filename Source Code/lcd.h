@@ -18,10 +18,10 @@
 #include <stdio.h>
 #include "alarm_timing.h"
 
-#define LCD_Dir  DDRB			/* Define LCD data port direction */
-#define LCD_Port PORTB			/* Define LCD data port */
-#define RS PB0				/* Define Register Select pin */
-#define EN PB1 				/* Define Enable signal pin */
+#define LCD_Dir  DDRA			/* Define LCD data port direction */
+#define LCD_Port PORTA			/* Define LCD data port */
+#define RS PA0				/* Define Register Select pin */
+#define EN PA1 				/* Define Enable signal pin */
 
 inline const char *int_string(int a,char b[])
 {
@@ -107,13 +107,17 @@ inline void LCD_Clear()
 //CENTRAL FUNCTIONS//
 /////////////////////
 
-inline void LCD_Home(DS3231 RTC)
+inline void LCD_Home(DS3231 RTC,int prev_h,int prev_m)
 {
-	const char *Time_str = RTC.getTimeStr();
-	const char *Date_str = RTC.getDateStr();
-	LCD_Clear();
-	LCD_String_xy(0,6,Time_str);
-	LCD_String_xy(1,4,Date_str);
+	Time t = RTC.getTime();
+	if (!(prev_h == t.hour && prev_m == t.min))
+	{
+		const char *Time_str = RTC.getTimeStr();
+		const char *Date_str = RTC.getDateStr();
+		LCD_Clear();
+		LCD_String_xy(0,6,Time_str);
+		LCD_String_xy(1,4,Date_str);
+	}
 }
 
 inline void LCD_Menu()
@@ -139,9 +143,9 @@ inline void LCD_SetTimeMenu()
 	LCD_String_xy(1,0,"3>BACK");
 }
 
-inline void LCD_AlarmList(Alarm alarms[4]) 
+inline void LCD_AlarmList(Alarm *alarms) 
 {
-	const char *alarm1_str,*alarm2_str,*alarm3_str,*alarm0_str;
+	char *alarm1_str,*alarm2_str,*alarm3_str,*alarm0_str;
 	alarm0_str = alarms[0].getAlarmStr();
 	alarm1_str = alarms[1].getAlarmStr();
 	alarm2_str = alarms[2].getAlarmStr();
@@ -195,7 +199,7 @@ inline void LCD_SetTime_H1()
 	LCD_Clear();
 	LCD_String_xy(0,0,"HH:MM");
 	LCD_String_xy(1,0,"^");
-	LCD_String_xy(1,9,"B>BACK");
+	LCD_String_xy(1,9,"*>BACK");
 }
 
 inline void LCD_SetTime_H2(int h1)
@@ -208,7 +212,7 @@ inline void LCD_SetTime_H2(int h1)
 	strcat(time,"H:MM");
 	LCD_String_xy(0,0,time);
 	LCD_String_xy(1,1,"^");
-	LCD_String_xy(1,9,"B>RESET");
+	LCD_String_xy(1,9,"*>RESET");
 }
 
 
@@ -225,7 +229,7 @@ inline void LCD_SetTime_M1(int h1,int h2)
 	strcat(time,":MM");
 	LCD_String_xy(0,0,time);
 	LCD_String_xy(1,3,"^");
-	LCD_String_xy(1,9,"B>RESET");
+	LCD_String_xy(1,9,"*>RESET");
 }
 
 inline void LCD_SetTime_M2(int h1,int h2,int m1)
@@ -245,7 +249,7 @@ inline void LCD_SetTime_M2(int h1,int h2,int m1)
 	strcat(time,"M");
 	LCD_String_xy(0,0,time);
 	LCD_String_xy(1,4,"^");
-	LCD_String_xy(1,9,"B>RESET");
+	LCD_String_xy(1,9,"*>RESET");
 }
 
 inline void LCD_SetTime_Final(int h1,int h2,int m1,int m2)
@@ -266,8 +270,8 @@ inline void LCD_SetTime_Final(int h1,int h2,int m1,int m2)
 	strcat(time,M1);
 	strcat(time,M2);
 	LCD_String_xy(0,0,time);
-	LCD_String_xy(0,9,"A>SET");
-	LCD_String_xy(1,9,"B>RESET");
+	LCD_String_xy(0,9,"#>SET");
+	LCD_String_xy(1,9,"*>RESET");
 }
 
 ////////////////
@@ -279,7 +283,7 @@ inline void LCD_SetDate_Y1()
 	LCD_Clear();
 	LCD_String_xy(0,0,"YY/MM/DD");
 	LCD_String_xy(1,0,"^");
-	LCD_String_xy(1,9,"B>BACK");
+	LCD_String_xy(1,9,"*>BACK");
 }
 
 inline void LCD_SetDate_Y2(int y1)
@@ -292,7 +296,7 @@ inline void LCD_SetDate_Y2(int y1)
 	strcat(date,"Y/MM/DD");
 	LCD_String_xy(0,0,date);
 	LCD_String_xy(1,1,"^");
-	LCD_String_xy(1,9,"B>RESET");
+	LCD_String_xy(1,9,"*>RESET");
 }
 
 inline void LCD_SetDate_M1(int y1,int y2)
@@ -308,7 +312,7 @@ inline void LCD_SetDate_M1(int y1,int y2)
 	strcat(date,"/MM/DD");
 	LCD_String_xy(0,0,date);
 	LCD_String_xy(1,3,"^");
-	LCD_String_xy(1,9,"B>RESET");
+	LCD_String_xy(1,9,"*>RESET");
 }
 
 inline void LCD_SetDate_M2(int y1,int y2,int m1)
@@ -328,7 +332,7 @@ inline void LCD_SetDate_M2(int y1,int y2,int m1)
 	strcat(date,"M/DD");
 	LCD_String_xy(0,0,date);
 	LCD_String_xy(1,4,"^");
-	LCD_String_xy(1,9,"B>RESET");
+	LCD_String_xy(1,9,"*>RESET");
 }
 
 inline void LCD_SetDate_D1(int y1,int y2,int m1,int m2)
@@ -351,7 +355,7 @@ inline void LCD_SetDate_D1(int y1,int y2,int m1,int m2)
 	strcat(date,"/DD");
 	LCD_String_xy(0,0,date);
 	LCD_String_xy(1,6,"^");
-	LCD_String_xy(1,9,"B>RESET");
+	LCD_String_xy(1,9,"*>RESET");
 }
 
 inline void LCD_SetDate_D2(int y1,int y2,int m1,int m2,int d1)
@@ -378,7 +382,7 @@ inline void LCD_SetDate_D2(int y1,int y2,int m1,int m2,int d1)
 	strcat(date,"D");
 	LCD_String_xy(0,0,date);
 	LCD_String_xy(1,7,"^");
-	LCD_String_xy(1,9,"B>RESET");
+	LCD_String_xy(1,9,"*>RESET");
 }
 
 inline void LCD_SetDate_Final(int y1,int y2,int m1,int m2,int d1,int d2)
@@ -406,8 +410,8 @@ inline void LCD_SetDate_Final(int y1,int y2,int m1,int m2,int d1,int d2)
 	strcat(date,D1);
 	strcat(date,D2);
 	LCD_String_xy(0,0,date);
-	LCD_String_xy(0,9,"A>SET");
-	LCD_String_xy(1,9,"B>RESET");
+	LCD_String_xy(0,9,"#>SET");
+	LCD_String_xy(1,9,"*>RESET");
 }
 
 #endif /* LCD_H_ */

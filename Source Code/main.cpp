@@ -6,7 +6,7 @@
  */ 
 
 #ifndef F_CPU
-#define F_CPU 16000000
+#define F_CPU 8000000
 #endif
 
 #include <avr/io.h>
@@ -14,14 +14,17 @@
 #include <util/delay.h>
 
 #include "lcd.h"
+#include "key_input.h"
 #include "keypad.h"
 #include "alarm_timing.h"
 
-#define SDA PINC4
-#define SCL PINC5
+#define SDA PINC1
+#define SCL PINC0
+#define Ring PINC4	// debug
 
 // initializing global variables
 DS3231 RTC(SDA,SCL);
+
 Alarm alarm1,alarm2,alarm3,alarm4;
 Alarm alarm_list[4] = {alarm1,alarm2,alarm3,alarm4};
 
@@ -35,29 +38,44 @@ int main(void)
 {
     RTC.begin();
 	LCD_Init();
+	DDRC |= (1 << Ring); // debug
+	PORTC |= 1 << PIN_STOP_ALARM;
 	
 	int menu;
+	int prev_hour = 61;
+	int prev_min = 61;
 	
 	while (1) 
     {
 		Time t = RTC.getTime();			// get the current time as a Time object
 		
-		LCD_Home(RTC);					
+		LCD_Home(RTC,prev_hour,prev_min);
+		// variables to avoid clearing and writing when the time has not changed
+		prev_hour = t.hour;
+		prev_min = t.min;					
 		
 		// check if any alarm time has reached
 		for (int i = 0; i < 4; i++)		// iterating through each alarm
 		{
 			if ((t.hour == alarm_list[i].hour) && (t.min == alarm_list[i].minute) && (alarm_list[i].active == 1))	// check for ring time of an active alarm
+			{
+				PORTC |=  (1<<Ring);// debug
+				_delay_ms(500);
 				alarm_list[i].ring();
+				PORTC &= ~(1<<Ring);
 				break;
+			}
 		}
 		
-		LCD_Home(RTC);
+		LCD_Home(RTC,prev_hour,prev_min);
+		prev_hour = t.hour;
+		prev_min = t.min;
 		
 		menu = menu_read();				// check if menu button is pressed
 		
 		if (menu == 1)
 			Menu();						// execute menu function
+		_delay_ms(0);
     }
 }
 

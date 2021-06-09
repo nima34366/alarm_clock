@@ -8,7 +8,7 @@
 #define AUDIO_OUTPUT_H_
 
 #ifndef F_CPU
-#define F_CPU 16000000UL
+#define F_CPU 8000000UL
 #endif
 #define __DELAY_BACKWARD_COMPATIBLE__
 #include <avr/io.h>
@@ -17,8 +17,8 @@
 #include "notes.h"
 #include "tones.h"
 #define PORT PORTC
-#define PIN_SPEAKER_OUT PINC0  //speaker port
-#define PIN_STOP_ALARM PINC1
+#define PIN_SPEAKER_OUT PINC2  //speaker port
+#define PIN_STOP_ALARM PINC3
 
 class Tones
 {

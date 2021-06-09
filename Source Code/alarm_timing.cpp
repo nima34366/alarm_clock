@@ -10,7 +10,7 @@
 #endif
 
 #include "alarm_timing.h"
-#include "keypad.h"	
+#include "key_input.h"	
 #include "lcd.h"		
 #include <avr/io.h>
 #include <util/delay.h>
@@ -40,8 +40,8 @@
 
 #define cbi(sfr, bit) (_SFR_BYTE(sfr) &= ~_BV(bit))
 
-#define SDA PINC4
-#define SCL PINC5
+#define SDA PINC1
+#define SCL PINC0
 
 ////////////////////////////////////////////////////////
 /*************** Class methods for Time ***************/
@@ -265,7 +265,7 @@ Alarm::Alarm()
 	this->hour = 0;
 	this->minute = 0;
 	this->active = 0;
-	//this->tone = Tones();	// default tone
+	this->tone = Tones();	// default tone
 }
 
 // Public functions
@@ -321,7 +321,7 @@ void Alarm::set_tone()
 	greendleves.rate=600;
 	
 	LCD_Tone();
-	int tone_number = Keypad_read();
+	int tone_number = keyfind();
 	Tones tone_selected;
 	
 	switch (tone_number)
@@ -345,7 +345,7 @@ void Alarm::set_tone()
 
 char *Alarm::getAlarmStr()
 {	
-	static char output[] = "xx:xxx";
+	static char output[] = "xxxxxx";
 	// if the alarm is active ,  the string will be in format "HH:MM"
 	if (this->active == 1)
 	{
@@ -363,6 +363,8 @@ char *Alarm::getAlarmStr()
 		}
 		output[1] = char((hour % 10) + 48);
 		
+		output[2] = 58;
+		
 		// convert minute to string
 		if (minute < 10)
 		{
@@ -377,7 +379,7 @@ char *Alarm::getAlarmStr()
 	}
 	
 	// not an active alarm ,  the string will be 'ADD'
-	else 
+	else if (this->active == 0)
 	{
 		output[0] = 65;
 		output[1] = 68;
@@ -402,14 +404,14 @@ void timing_set_time(DS3231 rtc)
 	
 	// read digit 1 of hour
 	LCD_SetTime_H1();
-	h1 = Keypad_read();
+	h1 = keyfind();
 	if (h1==20)			// input == 20 --> Back
 	{
 		return;
 	}
 	
 	LCD_SetTime_H2(h1);
-	h2 = Keypad_read();
+	h2 = keyfind();
 	if (h2==20)					// input == 20 --> Reset
 	{
 		timing_set_time(rtc);	// calling the function again recursively
@@ -417,7 +419,7 @@ void timing_set_time(DS3231 rtc)
 	}
 	
 	LCD_SetTime_M1(h1,h2);
-	m1 = Keypad_read();
+	m1 = keyfind();
 	if (m1==20)					// input == 20 --> Reset
 	{
 		timing_set_time(rtc);
@@ -425,7 +427,7 @@ void timing_set_time(DS3231 rtc)
 	}
 	
 	LCD_SetTime_M2(h1,h2,m1);
-	m2 = Keypad_read();
+	m2 = keyfind();
 	if (m2==20)					// input == 20 --> Reset
 	{
 		timing_set_time(rtc);
@@ -433,7 +435,7 @@ void timing_set_time(DS3231 rtc)
 	}
 	
 	LCD_SetTime_Final(h1,h2,m1,m2);
-	int confirm = Keypad_read();
+	int confirm = keyfind();
 	
 	// confirm = 10 --> Set, confirm = 20 --> Reset
 	while (!(confirm == 10 || confirm == 20))	// loop until a valid input is given
@@ -441,7 +443,7 @@ void timing_set_time(DS3231 rtc)
 		LCD_Invalidinput();
 		_delay_ms(1000);
 		LCD_SetTime_Final(h1,h2,m1,m2);
-		confirm = Keypad_read();
+		confirm = keyfind();
 	}
 	
 	if (confirm == 10){
@@ -458,7 +460,7 @@ void timing_set_time(DS3231 rtc)
 	}
 	else if (confirm == 20)
 	{
-		timing_set_date(rtc);
+		timing_set_time(rtc);
 		return;
 	}
 }
@@ -473,14 +475,14 @@ void timing_set_date(DS3231 rtc)
 	int year,month,day;
 	
 	LCD_SetDate_Y1();	
-	y1 = Keypad_read();
+	y1 = keyfind();
 	if (y1==20)	// Back
 	{
 		return;
 	}
 	
 	LCD_SetDate_Y2(y1);	
-	y2 = Keypad_read();
+	y2 = keyfind();
 	if (y2==20)			// Reset
 	{
 		timing_set_date(rtc);
@@ -488,15 +490,15 @@ void timing_set_date(DS3231 rtc)
 	}
 	
 	LCD_SetDate_M1(y1,y2);	
-	m1 = Keypad_read();
+	m1 = keyfind();
 	if (m1==20)			// Reset
 	{
 		timing_set_date(rtc);
 		return;
 	}
 	
-	LCD_SetTime_M2(y1,y2,m1);	
-	m2 = Keypad_read();
+	LCD_SetDate_M2(y1,y2,m1);	
+	m2 = keyfind();
 	if (m2==20)			// Reset
 	{
 		timing_set_date(rtc);
@@ -504,7 +506,7 @@ void timing_set_date(DS3231 rtc)
 	}
 	
 	LCD_SetDate_D1(y1,y2,m1,m2);	
-	d1 = Keypad_read();
+	d1 = keyfind();
 	if (d1==20)			// Reset
 	{
 		timing_set_date(rtc);
@@ -512,7 +514,7 @@ void timing_set_date(DS3231 rtc)
 	}
 	
 	LCD_SetDate_D2(y1,y2,m1,m2,d1);
-	d2 = Keypad_read();	
+	d2 = keyfind();	
 	if (d2==20)			// Reset
 	{
 		timing_set_date(rtc);
@@ -520,7 +522,7 @@ void timing_set_date(DS3231 rtc)
 	}
 	
 	LCD_SetDate_Final(y1,y2,m1,m2,d1,d2);	
-	int confirm = Keypad_read();
+	int confirm = keyfind();
 	
 	// confirm = 10 --> Set, confirm = 20 --> Reset
 	while (!(confirm == 10 || confirm == 20))		// Loop until invalid input
@@ -528,7 +530,7 @@ void timing_set_date(DS3231 rtc)
 		LCD_Invalidinput();
 		_delay_ms(1000);
 		LCD_SetDate_Final(y1,y2,m1,m2,d1,d2);	//replace
-		confirm = Keypad_read();
+		confirm = keyfind();
 	}
 	
 	if (confirm == 10){		// Set
@@ -562,45 +564,45 @@ void timing_set_alarm(Alarm *alarm_list,int i)
 	int h,m;
 	
 	LCD_SetTime_H1();
-	h1 = Keypad_read();
-	if (h1==20)
+	h1 = keyfind();
+	if (h1==10)
 	{
 		return;
 	}	
 	
 	LCD_SetTime_H2(h1);
-	h2 = Keypad_read();
-	if (h2==20)
+	h2 = keyfind();
+	if (h2==10)
 	{
 		timing_set_alarm(alarm_list,i);
 		return;
 	}
 	
 	LCD_SetTime_M1(h1,h2);
-	m1 = Keypad_read();
-	if (m1==20)
+	m1 = keyfind();
+	if (m1==10)
 	{
 		timing_set_alarm(alarm_list,i);
 		return;
 	}
 	
 	LCD_SetTime_M2(h1,h2,m1);
-	m2 = Keypad_read();
-	if (m2==20)
+	m2 = keyfind();
+	if (m2==10)
 	{
 		timing_set_alarm(alarm_list,i);
 		return;
 	}
 	
 	LCD_SetTime_Final(h1,h2,m1,m2);
-	int confirm = Keypad_read();
+	int confirm = keyfind();
 	
 	while (!(confirm == 10 || confirm == 20))
 	{
 		LCD_Invalidinput();
 		_delay_ms(1000);
 		LCD_SetTime_Final(h1,h2,m1,m2);
-		confirm = Keypad_read();
+		confirm = keyfind();
 	}
 	
 	if (confirm == 10){

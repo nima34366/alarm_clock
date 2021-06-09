@@ -34,9 +34,11 @@ void Tones::play_note(float Note_frequency,float Note_duration)
 }
 void Tones::audio_play()
 {
-	int stop_audio;
 	int check_input_pin;	
 	DDRC &= ~(1 << PIN_STOP_ALARM);
+	
+	int stop_audio = 1;
+
 	while (stop_audio==1)
 	{  //when alarm okay set the variable to 1
 		for (int i = 0; i <  length ; i = i + 1)
