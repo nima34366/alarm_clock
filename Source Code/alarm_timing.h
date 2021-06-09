@@ -69,14 +69,15 @@ public:
 	void set(int alarm_h,int alarm_m);								// set an alarm
 	void del();														// delete the instance of alarm by setting active->0
 	void ring();													// ring the alarm
-	void set_tone();										// set a tone for the alarm
+ 	void set_tone();										// set a tone for the alarm
 	char *getAlarmStr();										// get the alarm as a string
 };
 
 // Function  prototypes
 void timing_set_time(DS3231 rtc);									// Main function to set time
 void timing_set_date(DS3231 rtc);									// Main function to set date
-void timing_set_alarm(Alarm alarm);									// Main function to set an alarm
+void timing_set_alarm(Alarm *alarm_list,int i);						// Main function to set an alarm
 void timing_delete_alarms(Alarm *alarm_list);						// to delete all the alarms
+void reset_time(DS3231 rtc);										// to reset time
 
 #endif /* ALARM_TIMING_H_ */

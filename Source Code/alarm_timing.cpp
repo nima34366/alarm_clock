@@ -265,7 +265,7 @@ Alarm::Alarm()
 	this->hour = 0;
 	this->minute = 0;
 	this->active = 0;
-	this->tone = Tones();	// default tone
+	//this->tone = Tones();	// default tone
 }
 
 // Public functions
@@ -293,6 +293,7 @@ void Alarm::ring()
 	this->active = 0;
 }
 
+
 void Alarm::set_tone()
 {	
 	Tones harry_potter;
@@ -317,7 +318,7 @@ void Alarm::set_tone()
 	greendleves.notes=Greendleves_notes;
 	greendleves.durations=game_of_throns_notes_durations;
 	greendleves.length=Greensleves_notes_length;
-	greendleves.rate=600;
+	greendleves.rate=600;
 	
 	LCD_Tone();
 	int tone_number = Keypad_read();
@@ -552,7 +553,7 @@ void timing_set_date(DS3231 rtc)
 	_delay_ms(100);
 }
 
-void timing_set_alarm(Alarm alarm)
+void timing_set_alarm(Alarm *alarm_list,int i)
 {
 	// initializing local variables
 	int h1,h2;
@@ -571,7 +572,7 @@ void timing_set_alarm(Alarm alarm)
 	h2 = Keypad_read();
 	if (h2==20)
 	{
-		timing_set_alarm(alarm);
+		timing_set_alarm(alarm_list,i);
 		return;
 	}
 	
@@ -579,7 +580,7 @@ void timing_set_alarm(Alarm alarm)
 	m1 = Keypad_read();
 	if (m1==20)
 	{
-		timing_set_alarm(alarm);
+		timing_set_alarm(alarm_list,i);
 		return;
 	}
 	
@@ -587,7 +588,7 @@ void timing_set_alarm(Alarm alarm)
 	m2 = Keypad_read();
 	if (m2==20)
 	{
-		timing_set_alarm(alarm);
+		timing_set_alarm(alarm_list,i);
 		return;
 	}
 	
@@ -609,14 +610,14 @@ void timing_set_alarm(Alarm alarm)
 		if (!(((0 <= h) && (h <= 24)) && ((0 <= m) && (m <=60)))){		// if the inputs are invalid
 			LCD_Invalidinput();
 			_delay_ms(1000);
-			timing_set_alarm(alarm);
+			timing_set_alarm(alarm_list,i);
 			return;
 		}
-		alarm.set(h,m);
+		alarm_list[i].set(h,m);
 	}
 	else if (confirm == 20)
 	{
-		timing_set_alarm(alarm);
+		timing_set_alarm(alarm_list,i);
 		return;
 	}
 	_delay_ms(100);
@@ -632,6 +633,12 @@ void timing_delete_alarms(Alarm *alarm_list)
 	{
 		alarm_list[i].del();
 	}
+}
+
+void reset_time(DS3231 rtc)
+{
+	rtc.setTime(0,0,0);
+	rtc.setDate(0,0,2000);
 }
 
 
