@@ -16,6 +16,7 @@
 
 #include <string.h>
 #include <stdio.h>
+#include "alarm_timing.h"
 
 #define LCD_Dir  DDRB			/* Define LCD data port direction */
 #define LCD_Port PORTB			/* Define LCD data port */
@@ -106,11 +107,13 @@ inline void LCD_Clear()
 //CENTRAL FUNCTIONS//
 /////////////////////
 
-inline void LCD_Home(const char *Time,const char *Date)
+inline void LCD_Home(DS3231 RTC)
 {
+	const char *Time_str = RTC.getTimeStr();
+	const char *Date_str = RTC.getDateStr();
 	LCD_Clear();
-	LCD_String_xy(0,6,Time);
-	LCD_String_xy(1,4,Date);
+	LCD_String_xy(0,6,Time_str);
+	LCD_String_xy(1,4,Date_str);
 }
 
 inline void LCD_Menu()
@@ -136,17 +139,22 @@ inline void LCD_SetTimeMenu()
 	LCD_String_xy(1,0,"3>BACK");
 }
 
-inline void LCD_AlarmList(const char *alarms[4]) // Insert in array of "00:00"
+inline void LCD_AlarmList(Alarm alarms[4]) 
 {
+	const char *alarm1_str,*alarm2_str,*alarm3_str,*alarm0_str;
+	alarm0_str = alarms[0].getAlarmStr();
+	alarm1_str = alarms[1].getAlarmStr();
+	alarm2_str = alarms[2].getAlarmStr();
+	alarm3_str = alarms[3].getAlarmStr();
 	LCD_Clear();
 	char alarm0[10]= "1>";
 	char alarm1[10]= "2>";
 	char alarm2[10]= "3>";
 	char alarm3[10]= "4>"; 
-	strcat(alarm0,alarms[0]);
-	strcat(alarm1,alarms[1]);
-	strcat(alarm2,alarms[2]);
-	strcat(alarm3,alarms[3]);
+	strcat(alarm0,alarm0_str);
+	strcat(alarm1,alarm1_str);
+	strcat(alarm2,alarm2_str);
+	strcat(alarm3,alarm3_str);
 	LCD_String_xy(0,0,alarm0);
 	LCD_String_xy(0,8,alarm1);
 	LCD_String_xy(1,0,alarm2);
