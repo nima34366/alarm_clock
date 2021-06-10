@@ -14,7 +14,6 @@
 #include <util/delay.h>
 
 #include "lcd.h"
-#include "key_input.h"
 #include "keypad.h"
 #include "alarm_timing.h"
 
