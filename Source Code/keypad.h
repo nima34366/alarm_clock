@@ -1,50 +1,100 @@
 
 #ifndef KEYPAD_H_
 #define KEYPAD_H_
-
+	
 #include <avr/io.h>
 #include <util/delay.h>
 
-#define  data_diection_d DDRD
-#define  port_state_d PORTD
+
+#define KEY_PRT 	PORTD
+#define KEY_DDR		DDRD
+#define KEY_PIN		PIND
 
 inline int Keypad_read()
 {
-	data_diection_d = 0xff;    //DDRC 1 output, 0 input
-	while (1)
-	{	
-		_delay_ms(50);
-		port_state_d = 0b00001111;   //PORTC 1 high, 0 low
-		//data_diection_d = 0x00;
-		int colomn = PIND & 0b11110000; // check which colomn pressed
+	unsigned int keypad[4][3] = {	{1,2,3},
+	{4,5,6},
+	{7,8,9},
+	{20,0,10}};
+
+	unsigned int colloc, rowloc;
+	
+	while(1)
+	{
+		KEY_DDR = 0xF0;           /* set port direction as input-output */
+		KEY_PRT = 0xFF;
+
+		do
+		{
+			KEY_PRT &= 0x0F;      /* mask PORT for column read only */
+			asm("NOP");
+			colloc = (KEY_PIN & 0x0F); /* read status of column */
+		}while(colloc != 0x0F);
 		
-		port_state_d = 0b11110000;
-		//data_diection_d = 0x00;
-		int row = PIND & 0b00001111; // check which colomn pressed
-		//row1 set to PC0 and so on, colom1 set to PC4 and so on//
-		
-		if ((colomn == 1<<4) & (row == 1)){return 1; }
-		if ((colomn == 1<<5) & (row == 1)){return 2; }
-		if ((colomn == 1<<6) & (row == 1)){return 3; }
-		if ((colomn == 1<<4) & (row == 1<<3)){return  20;}
-		
-		if ((colomn == 1<<4) & (row == 1<<1)){return  4; }
-		if ((colomn == 1<<5) & (row == 1<<1)){return  5; }
-		if ((colomn == 1<<6) & (row == 1<<1)){return  6; }
-		if ((colomn == 1<<6) & (row == 1<<3)){return  10;}
-		
-		if ((colomn == 1<<4) & (row == 1<<2)){return  7; }
-		if ((colomn == 1<<5) & (row == 1<<2)){return  8; }
-		if ((colomn == 1<<6) & (row == 1<<2)){return  9; }
-		if ((colomn == 1<<5) & (row == 1<<3)){return  0; }
-		_delay_ms(100);
+		do
+		{
+			do
+			{
+				_delay_ms(20);             /* 20ms key debounce time */
+				colloc = (KEY_PIN & 0x0F); /* read status of column */
+				}while(colloc == 0x0F);        /* check for any key press */
+				
+				_delay_ms (40);	            /* 20 ms key debounce time */
+				colloc = (KEY_PIN & 0x0F);
+			}while(colloc == 0x0F);
+
+			/* now check for rows */
+			KEY_PRT = 0xEF;            /* check for pressed key in 1st row */
+			asm("NOP");
+			colloc = (KEY_PIN & 0x0F);
+			if(colloc != 0x0F)
+			{
+				rowloc = 0;
+				break;
+			}
+
+			KEY_PRT = 0xDF;		/* check for pressed key in 2nd row */
+			asm("NOP");
+			colloc = (KEY_PIN & 0x0F);
+			if(colloc != 0x0F)
+			{
+				rowloc = 1;
+				break;
+			}
+			
+			KEY_PRT = 0xBF;		/* check for pressed key in 3rd row */
+			asm("NOP");
+			colloc = (KEY_PIN & 0x0F);
+			if(colloc != 0x0F)
+			{
+				rowloc = 2;
+				break;
+			}
+
+			KEY_PRT = 0x7F;		/* check for pressed key in 4th row */
+			asm("NOP");
+			colloc = (KEY_PIN & 0x0F);
+			if(colloc != 0x0F)
+			{
+				rowloc = 3;
+				break;
+			}
+		}
+
+		if(colloc == 0x0E)
+		return(keypad[rowloc][0]);
+		else if(colloc == 0x0D)
+		return(keypad[rowloc][1]);
+		else if(colloc == 0x0B)
+		return(keypad[rowloc][2]);
+		else
+		return(keypad[rowloc][3]);
 	}
-}
 
 inline int menu_read(){
-	DDRB |= 1<<7;
-	if (PINB & (1)){return 1;}
-	else {return 0;}
+	PORTB |= 1<<7;
+	if (PINB & 1){return 1;} 
+	else {return 0;}	
 }
 
 #endif /* KEYPAD_H_ */

@@ -145,7 +145,7 @@ inline void LCD_SetTimeMenu()
 
 inline void LCD_AlarmList(Alarm *alarms) 
 {
-	char *alarm1_str,*alarm2_str,*alarm3_str,*alarm0_str;
+	const char *alarm1_str,*alarm2_str,*alarm3_str,*alarm0_str;
 	alarm0_str = alarms[0].getAlarmStr();
 	alarm1_str = alarms[1].getAlarmStr();
 	alarm2_str = alarms[2].getAlarmStr();

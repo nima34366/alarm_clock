@@ -2,18 +2,18 @@
 
 Tones::Tones()
 {
-	this->notes=harry_potter_notes;
-	this->durations=harry_potter_notes_durations;
-	this->length=harry_potter_notes_length;
-	this->rate=4000;
+	 this->notes=harry_potter_notes;
+	 this->durations=harry_potter_notes_durations;
+	 this->length=harry_potter_notes_length;
+	 this->rate=4000;
 }
-
+	
 void Tones::play_note(float Note_frequency,float Note_duration)
 {
 	long cycles;
 	float complete_period;
 	DDRC |= (1 << PIN_SPEAKER_OUT);
-	
+		
 	if (Note_frequency==0)
 	{
 		PORT &= ~(1 << PIN_SPEAKER_OUT);
@@ -34,7 +34,7 @@ void Tones::play_note(float Note_frequency,float Note_duration)
 }
 void Tones::audio_play()
 {
-	int check_input_pin;
+	int check_input_pin;	
 	DDRC &= ~(1 << PIN_STOP_ALARM);
 	
 	int stop_audio = 1;
@@ -45,7 +45,7 @@ void Tones::audio_play()
 		{
 			check_input_pin=(PINC & (1<< PIN_STOP_ALARM));
 			if(check_input_pin == 0)
-			{
+			{  
 				stop_audio=0;
 				break;
 			}

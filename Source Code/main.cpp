@@ -6,7 +6,7 @@
  */ 
 
 #ifndef F_CPU
-#define F_CPU 8000000
+#define F_CPU 8000000UL
 #endif
 
 #include <avr/io.h>
@@ -38,6 +38,7 @@ int main(void)
 {
     RTC.begin();
 	LCD_Init();
+	
 	DDRC |= (1 << Ring); // debug
 	PORTC |= 1 << PIN_STOP_ALARM;
 	
@@ -60,9 +61,10 @@ int main(void)
 			if ((t.hour == alarm_list[i].hour) && (t.min == alarm_list[i].minute) && (alarm_list[i].active == 1))	// check for ring time of an active alarm
 			{
 				PORTC |=  (1<<Ring);// debug
-				_delay_ms(500);
 				alarm_list[i].ring();
 				PORTC &= ~(1<<Ring);
+				prev_hour = 61;
+				prev_min = 61;
 				break;
 			}
 		}
@@ -74,8 +76,11 @@ int main(void)
 		menu = menu_read();				// check if menu button is pressed
 		
 		if (menu == 1)
-			Menu();						// execute menu function
-		_delay_ms(0);
+		{
+			Menu();
+			prev_hour = 61;
+			prev_min = 61;						// execute menu function
+		}
     }
 }
 
@@ -84,7 +89,7 @@ void Menu()
 {
 	LCD_Menu();
 	
-	int input = Keypad_read();
+	int input = Keypad_read ();
 	
 	switch (input)
 	{
@@ -144,7 +149,7 @@ void Alarm_Menu()
 	int input = Keypad_read();
 	
 	if (input == 1 || input == 2 || input == 3 || input == 4 || input == 5 || input == 6 || input == 7) // if the user has selected an alarm
-		Alarm_Options(alarm_list,input);
+		Alarm_Options(alarm_list,input-1);
 		
 	else if (input == 10)	// Back
 	{
