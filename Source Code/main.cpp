@@ -6,21 +6,21 @@
  */ 
 
 #ifndef F_CPU
-#define F_CPU 8000000UL
+#define F_CPU 16000000UL
 #endif
 
 #include <avr/io.h>
+#include <avr/interrupt.h>
 #include <stdio.h>
 #include <util/delay.h>
 
 #include "lcd.h"
-#include "key_input.h"
 #include "keypad.h"
 #include "alarm_timing.h"
 
 #define SDA PINC1
 #define SCL PINC0
-#define Ring PINC4	// debug
+#define Ring PINC4	
 
 // initializing global variables
 DS3231 RTC(SDA,SCL);
@@ -34,17 +34,29 @@ void Alarm_Menu();
 void Set_Time_Menu();
 void Menu();
 
+volatile uint8_t count;
+volatile int prev_hour,prev_min;
+
 int main(void)
 {
     RTC.begin();
 	LCD_Init();
 	
-	DDRC |= (1 << Ring); // debug
+	DDRC |= (1 << Ring);
 	PORTC |= 1 << PIN_STOP_ALARM;
 	
 	int menu;
-	int prev_hour = 61;
-	int prev_min = 61;
+	prev_hour = 61;
+	prev_min = 61;
+	
+	// initializing interrupt for ringing the alarm
+	TCNT0 = 0;
+	count = 0;
+	TCCR0A = 0x00;
+	TCCR0B |= (1<<CS02) | (1<<CS00); // PRESCALER 1024
+	TIMSK0 = (1<<TOIE0);
+	
+	sei(); 
 	
 	while (1) 
     {
@@ -53,7 +65,28 @@ int main(void)
 		LCD_Home(RTC,prev_hour,prev_min);
 		// variables to avoid clearing and writing when the time has not changed
 		prev_hour = t.hour;
-		prev_min = t.min;					
+		prev_min = t.min;	
+	
+		
+		menu = menu_read();				// check if menu button is pressed
+		
+		if (menu == 1)
+		{
+			Menu();						// execute menu function
+			prev_hour = 61;
+			prev_min = 61;						
+		}
+		_delay_ms(100);
+    }
+}
+
+// if overflow interrupt occurs check for alarm
+ISR (TIMER0_OVF_vect)
+{	
+
+	if (count == 62)	// check for alarm time every 1s
+	{
+		Time t = RTC.getTime();			// get the current time as a Time object
 		
 		// check if any alarm time has reached
 		for (int i = 0; i < 4; i++)		// iterating through each alarm
@@ -68,20 +101,9 @@ int main(void)
 				break;
 			}
 		}
-		
-		LCD_Home(RTC,prev_hour,prev_min);
-		prev_hour = t.hour;
-		prev_min = t.min;
-		
-		menu = menu_read();				// check if menu button is pressed
-		
-		if (menu == 1)
-		{
-			Menu();
-			prev_hour = 61;
-			prev_min = 61;						// execute menu function
-		}
-    }
+	}
+	else
+	count++;
 }
 
 // Main menu function
@@ -103,7 +125,7 @@ void Menu()
 			reset_time(RTC);
 			timing_delete_alarms(alarm_list);
 			break;
-		case 4:		// Back
+		case 10:		// Back
 			return;
 		default:	// None of the above (invalid input)
 			LCD_Invalidinput();
@@ -128,7 +150,7 @@ void Set_Time_Menu()
 		case 2:		// Set Date
 			timing_set_date(RTC);
 			break;
-		case 3:		// Back (base case of the recursive function)
+		case 10:		// Back (base case of the recursive function)
 			Menu();
 			return;
 		default:	// invalid input
@@ -183,7 +205,7 @@ void Alarm_Options(Alarm *alarm_list,int i)
 		case 3:	 // Set Tone
 			alarm_list[i].set_tone();
 			break;
-		case 4:	 // Back
+		case 10:	 // Back
 			Alarm_Menu();
 			return;
 		default: // invalid input

@@ -8,7 +8,7 @@
 #define AUDIO_OUTPUT_H_
 
 #ifndef F_CPU
-#define F_CPU 8000000UL
+#define F_CPU 16000000UL
 #endif
 #define __DELAY_BACKWARD_COMPATIBLE__
 #include <avr/io.h>

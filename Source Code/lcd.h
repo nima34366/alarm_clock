@@ -110,8 +110,9 @@ inline void LCD_Clear()
 inline void LCD_Home(DS3231 RTC,int prev_h,int prev_m)
 {
 	Time t = RTC.getTime();
+	
 	if (!(prev_h == t.hour && prev_m == t.min))
-	{
+	{	
 		const char *Time_str = RTC.getTimeStr();
 		const char *Date_str = RTC.getDateStr();
 		LCD_Clear();
@@ -126,7 +127,7 @@ inline void LCD_Menu()
 	LCD_String_xy(0,0,"1>D&T");
 	LCD_String_xy(0,8,"2>ALARM");
 	LCD_String_xy(1,0,"3>RESET");
-	LCD_String_xy(1,8,"4>BACK");
+	LCD_String_xy(1,8,"#>BACK");
 }
 
 inline void LCD_Invalidinput()
@@ -140,7 +141,7 @@ inline void LCD_SetTimeMenu()
 	LCD_Clear();
 	LCD_String_xy(0,0,"1>TIME");
 	LCD_String_xy(0,8,"2>DATE");
-	LCD_String_xy(1,0,"3>BACK");
+	LCD_String_xy(1,0,"#>BACK");
 }
 
 inline void LCD_AlarmList(Alarm *alarms) 
@@ -171,7 +172,7 @@ inline void LCD_AlarmMenu()
 	LCD_String_xy(0,0,"1>SET");
 	LCD_String_xy(0,8,"2>DELETE");
 	LCD_String_xy(1,0,"3>TONE");
-	LCD_String_xy(1,8,"4>BACK");
+	LCD_String_xy(1,8,"#>BACK");
 }
 
 inline void LCD_Tone()
@@ -199,7 +200,7 @@ inline void LCD_SetTime_H1()
 	LCD_Clear();
 	LCD_String_xy(0,0,"HH:MM");
 	LCD_String_xy(1,0,"^");
-	LCD_String_xy(1,9,"*>BACK");
+	LCD_String_xy(1,9,"#>BACK");
 }
 
 inline void LCD_SetTime_H2(int h1)
@@ -212,7 +213,7 @@ inline void LCD_SetTime_H2(int h1)
 	strcat(time,"H:MM");
 	LCD_String_xy(0,0,time);
 	LCD_String_xy(1,1,"^");
-	LCD_String_xy(1,9,"*>RESET");
+	LCD_String_xy(1,9,"#>RESET");
 }
 
 
@@ -229,7 +230,7 @@ inline void LCD_SetTime_M1(int h1,int h2)
 	strcat(time,":MM");
 	LCD_String_xy(0,0,time);
 	LCD_String_xy(1,3,"^");
-	LCD_String_xy(1,9,"*>RESET");
+	LCD_String_xy(1,9,"#>RESET");
 }
 
 inline void LCD_SetTime_M2(int h1,int h2,int m1)
@@ -249,7 +250,7 @@ inline void LCD_SetTime_M2(int h1,int h2,int m1)
 	strcat(time,"M");
 	LCD_String_xy(0,0,time);
 	LCD_String_xy(1,4,"^");
-	LCD_String_xy(1,9,"*>RESET");
+	LCD_String_xy(1,9,"#>RESET");
 }
 
 inline void LCD_SetTime_Final(int h1,int h2,int m1,int m2)
@@ -270,8 +271,8 @@ inline void LCD_SetTime_Final(int h1,int h2,int m1,int m2)
 	strcat(time,M1);
 	strcat(time,M2);
 	LCD_String_xy(0,0,time);
-	LCD_String_xy(0,9,"#>SET");
-	LCD_String_xy(1,9,"*>RESET");
+	LCD_String_xy(0,9,"*>SET");
+	LCD_String_xy(1,9,"#>RESET");
 }
 
 ////////////////
@@ -283,7 +284,7 @@ inline void LCD_SetDate_Y1()
 	LCD_Clear();
 	LCD_String_xy(0,0,"YY/MM/DD");
 	LCD_String_xy(1,0,"^");
-	LCD_String_xy(1,9,"*>BACK");
+	LCD_String_xy(1,9,"#>BACK");
 }
 
 inline void LCD_SetDate_Y2(int y1)
@@ -296,7 +297,7 @@ inline void LCD_SetDate_Y2(int y1)
 	strcat(date,"Y/MM/DD");
 	LCD_String_xy(0,0,date);
 	LCD_String_xy(1,1,"^");
-	LCD_String_xy(1,9,"*>RESET");
+	LCD_String_xy(1,9,"#>RESET");
 }
 
 inline void LCD_SetDate_M1(int y1,int y2)
@@ -312,7 +313,7 @@ inline void LCD_SetDate_M1(int y1,int y2)
 	strcat(date,"/MM/DD");
 	LCD_String_xy(0,0,date);
 	LCD_String_xy(1,3,"^");
-	LCD_String_xy(1,9,"*>RESET");
+	LCD_String_xy(1,9,"#>RESET");
 }
 
 inline void LCD_SetDate_M2(int y1,int y2,int m1)
@@ -332,7 +333,7 @@ inline void LCD_SetDate_M2(int y1,int y2,int m1)
 	strcat(date,"M/DD");
 	LCD_String_xy(0,0,date);
 	LCD_String_xy(1,4,"^");
-	LCD_String_xy(1,9,"*>RESET");
+	LCD_String_xy(1,9,"#>RESET");
 }
 
 inline void LCD_SetDate_D1(int y1,int y2,int m1,int m2)
@@ -355,7 +356,7 @@ inline void LCD_SetDate_D1(int y1,int y2,int m1,int m2)
 	strcat(date,"/DD");
 	LCD_String_xy(0,0,date);
 	LCD_String_xy(1,6,"^");
-	LCD_String_xy(1,9,"*>RESET");
+	LCD_String_xy(1,9,"#>RESET");
 }
 
 inline void LCD_SetDate_D2(int y1,int y2,int m1,int m2,int d1)
@@ -382,7 +383,7 @@ inline void LCD_SetDate_D2(int y1,int y2,int m1,int m2,int d1)
 	strcat(date,"D");
 	LCD_String_xy(0,0,date);
 	LCD_String_xy(1,7,"^");
-	LCD_String_xy(1,9,"*>RESET");
+	LCD_String_xy(1,9,"#>RESET");
 }
 
 inline void LCD_SetDate_Final(int y1,int y2,int m1,int m2,int d1,int d2)
@@ -410,8 +411,8 @@ inline void LCD_SetDate_Final(int y1,int y2,int m1,int m2,int d1,int d2)
 	strcat(date,D1);
 	strcat(date,D2);
 	LCD_String_xy(0,0,date);
-	LCD_String_xy(0,9,"#>SET");
-	LCD_String_xy(1,9,"*>RESET");
+	LCD_String_xy(0,9,"*>SET");
+	LCD_String_xy(1,9,"#>RESET");
 }
 
 #endif /* LCD_H_ */

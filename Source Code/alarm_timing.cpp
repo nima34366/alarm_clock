@@ -6,7 +6,7 @@
  */ 
 
 #ifndef F_CPU
-#define F_CPU 8000000UL
+#define F_CPU 16000000UL
 #endif
 
 #include "alarm_timing.h"
@@ -287,7 +287,7 @@ void Alarm::del()
 
 void Alarm::ring()
 {
-	LCD_Ringing();
+	//LCD_Ringing();
 	Tones alarm_tone = this->tone;
 	alarm_tone.audio_play();
 	
@@ -320,7 +320,7 @@ void Alarm::set_tone()
 	greendleves.notes=Greendleves_notes;
 	greendleves.durations=Greendleves_notes_durations;
 	greendleves.length=Greensleves_notes_length;
-	greendleves.rate=6000;
+	greendleves.rate=5000;
 	LCD_Tone();
 	int tone_number = Keypad_read();
 	Tones tone_selected;
@@ -406,14 +406,14 @@ void timing_set_time(DS3231 rtc)
 	// read digit 1 of hour
 	LCD_SetTime_H1();
 	h1 = Keypad_read();
-	if (h1==20)			// input == 20 --> Back
+	if (h1==10)			// input == 20 --> Back
 	{
 		return;
 	}
 	
 	LCD_SetTime_H2(h1);
 	h2 = Keypad_read();
-	if (h2==20)					// input == 20 --> Reset
+	if (h2==10)					// input == 20 --> Reset
 	{
 		timing_set_time(rtc);	// calling the function again recursively
 		return;
@@ -421,7 +421,7 @@ void timing_set_time(DS3231 rtc)
 	
 	LCD_SetTime_M1(h1,h2);
 	m1 = Keypad_read();
-	if (m1==20)					// input == 20 --> Reset
+	if (m1==10)					// input == 20 --> Reset
 	{
 		timing_set_time(rtc);
 		return;
@@ -429,7 +429,7 @@ void timing_set_time(DS3231 rtc)
 	
 	LCD_SetTime_M2(h1,h2,m1);
 	m2 = Keypad_read();
-	if (m2==20)					// input == 20 --> Reset
+	if (m2==10)					// input == 20 --> Reset
 	{
 		timing_set_time(rtc);
 		return;
@@ -447,7 +447,7 @@ void timing_set_time(DS3231 rtc)
 		confirm = Keypad_read();
 	}
 	
-	if (confirm == 10){
+	if (confirm == 20){
 		//setting the time
 		time_h = h1*10+h2;
 		time_m = m1*10+m2;
@@ -459,7 +459,7 @@ void timing_set_time(DS3231 rtc)
 		}
 		rtc.setTime(time_h,time_m,0);		// Set Time in the RTC
 	}
-	else if (confirm == 20)
+	else if (confirm == 10)
 	{
 		timing_set_time(rtc);
 		return;
@@ -477,14 +477,14 @@ void timing_set_date(DS3231 rtc)
 	
 	LCD_SetDate_Y1();	
 	y1 = Keypad_read();
-	if (y1==20)	// Back
+	if (y1==10)	// Back
 	{
 		return;
 	}
 	
 	LCD_SetDate_Y2(y1);	
 	y2 = Keypad_read();
-	if (y2==20)			// Reset
+	if (y2==10)			// Reset
 	{
 		timing_set_date(rtc);
 		return;
@@ -492,7 +492,7 @@ void timing_set_date(DS3231 rtc)
 	
 	LCD_SetDate_M1(y1,y2);	
 	m1 = Keypad_read();
-	if (m1==20)			// Reset
+	if (m1==10)			// Reset
 	{
 		timing_set_date(rtc);
 		return;
@@ -500,7 +500,7 @@ void timing_set_date(DS3231 rtc)
 	
 	LCD_SetDate_M2(y1,y2,m1);	
 	m2 = Keypad_read();
-	if (m2==20)			// Reset
+	if (m2==10)			// Reset
 	{
 		timing_set_date(rtc);
 		return;
@@ -508,7 +508,7 @@ void timing_set_date(DS3231 rtc)
 	
 	LCD_SetDate_D1(y1,y2,m1,m2);	
 	d1 = Keypad_read();
-	if (d1==20)			// Reset
+	if (d1==10)			// Reset
 	{
 		timing_set_date(rtc);
 		return;
@@ -516,7 +516,7 @@ void timing_set_date(DS3231 rtc)
 	
 	LCD_SetDate_D2(y1,y2,m1,m2,d1);
 	d2 = Keypad_read();	
-	if (d2==20)			// Reset
+	if (d2==10)			// Reset
 	{
 		timing_set_date(rtc);
 		return;
@@ -534,7 +534,7 @@ void timing_set_date(DS3231 rtc)
 		confirm = Keypad_read();
 	}
 	
-	if (confirm == 10){		// Set
+	if (confirm == 20){		// Set
 		//setting the date
 		year = 2000 + y1*10 + y2;
 		month = m1*10 + m2;
@@ -548,7 +548,7 @@ void timing_set_date(DS3231 rtc)
 		}
 		rtc.setDate(day,month,year);
 	}
-	else if (confirm == 20)	// Reset
+	else if (confirm == 10)	// Reset
 	{
 		timing_set_date(rtc);
 		return;
@@ -606,7 +606,7 @@ void timing_set_alarm(Alarm *alarm_list,int i)
 		confirm = Keypad_read();
 	}
 	
-	if (confirm == 10){
+	if (confirm == 20){
 		//setting the time
 		h = h1*10+h2;
 		m = m1*10+m2;
@@ -618,7 +618,7 @@ void timing_set_alarm(Alarm *alarm_list,int i)
 		}
 		alarm_list[i].set(h,m);
 	}
-	else if (confirm == 20)
+	else if (confirm == 10)
 	{
 		timing_set_alarm(alarm_list,i);
 		return;
