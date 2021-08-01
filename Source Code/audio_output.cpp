@@ -5,7 +5,7 @@ Tones::Tones()
 	 this->notes=harry_potter_notes;
 	 this->durations=harry_potter_notes_durations;
 	 this->length=harry_potter_notes_length;
-	 this->rate=32000;
+	 this->rate=6000;
 }
 	
 void Tones::play_note(float Note_frequency,float Note_duration)
@@ -17,7 +17,7 @@ void Tones::play_note(float Note_frequency,float Note_duration)
 	if (Note_frequency==0)
 	{
 		PORT &= ~(1 << PIN_SPEAKER_OUT);
-		_delay_us(Note_duration);
+		_delay_us(Note_duration/2);
 	}
 	else
 	{
