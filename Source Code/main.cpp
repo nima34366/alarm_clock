@@ -50,11 +50,11 @@ int main(void)
 	prev_min = 61;
 	
 	// initializing interrupt for ringing the alarm
-	TCNT0 = 0;
+	TCNT1 = 57724;
 	count = 0;
-	TCCR0A = 0x00;
-	TCCR0B |= (1<<CS02) | (1<<CS00); // PRESCALER 1024
-	TIMSK0 = (1<<TOIE0);
+	TCCR1A = 0x00;
+	TCCR1B |= (1<<CS12) | (1<<CS10);	 // PRESCALER 1024
+	TIMSK1 = (1<<TOIE1);
 	
 	sei(); 
 	
@@ -63,11 +63,11 @@ int main(void)
 		Time t = RTC.getTime();			// get the current time as a Time object
 		
 		LCD_Home(RTC,prev_hour,prev_min);
+
 		// variables to avoid clearing and writing when the time has not changed
 		prev_hour = t.hour;
 		prev_min = t.min;	
 	
-		
 		menu = menu_read();				// check if menu button is pressed
 		
 		if (menu == 1)
@@ -81,29 +81,29 @@ int main(void)
 }
 
 // if overflow interrupt occurs check for alarm
-ISR (TIMER0_OVF_vect)
+ISR (TIMER1_OVF_vect)
 {	
-
-	if (count == 62)	// check for alarm time every 1s
+	TCNT1 = 57724;
+	Time t = RTC.getTime();			// get the current time as a Time object
+	
+/*	PORTC |=  (1<<Ring);*/
+	_delay_ms(100);	
+/*	PORTC &= ~(1<<Ring);*/
+	
+	// check if any alarm time has reached
+	for (int i = 0; i < 4; i++)		// iterating through each alarm
 	{
-		Time t = RTC.getTime();			// get the current time as a Time object
-		
-		// check if any alarm time has reached
-		for (int i = 0; i < 4; i++)		// iterating through each alarm
+		if ((alarm_list[i].active == 1) && (t.hour == alarm_list[i].hour) && (t.min == alarm_list[i].minute))	// check for ring time of an active alarm
 		{
-			if ((t.hour == alarm_list[i].hour) && (t.min == alarm_list[i].minute) && (alarm_list[i].active == 1))	// check for ring time of an active alarm
-			{
-				PORTC |=  (1<<Ring);// debug
-				alarm_list[i].ring();
-				PORTC &= ~(1<<Ring);
-				prev_hour = 61;
-				prev_min = 61;
-				break;
-			}
+			PORTC |=  (1<<Ring);// debug
+			alarm_list[i].ring();
+			PORTC &= ~(1<<Ring);
+			prev_hour = 61;
+			prev_min = 61;
+			break;
 		}
 	}
-	else
-	count++;
+
 }
 
 // Main menu function
@@ -111,7 +111,7 @@ void Menu()
 {
 	LCD_Menu();
 	
-	int input = Keypad_read ();
+	int input = Keypad_read();
 	
 	switch (input)
 	{
@@ -165,25 +165,33 @@ void Set_Time_Menu()
 
 void Alarm_Menu()
 {	 
-	// Write code for scrolling 
-	LCD_AlarmList(alarm_list);	// Add a Back
+	LCD_AlarmList1(alarm_list);
 	
-	int input = Keypad_read();
-	
-	if (input == 1 || input == 2 || input == 3 || input == 4 || input == 5 || input == 6 || input == 7) // if the user has selected an alarm
-		Alarm_Options(alarm_list,input-1);
+	while (true)
+	{
+		int input = Keypad_read();
 		
-	else if (input == 10)	// Back
-	{
-		Menu();
-		return;
-	}
-	else	// invalid input
-	{
-		LCD_Invalidinput();
-		_delay_ms(1000);
-		Alarm_Menu();
-	}
+		if (input == 1 || input == 2 || input == 3 || input == 4 || input == 5 || input == 6 ) // if the user has selected an alarm
+		{
+			Alarm_Options(alarm_list,input-1);
+			break;
+		}
+		
+		else if (input == 20)
+		{
+			LCD_AlarmList2(alarm_list);
+		}
+		else if (input == 10)	// Back
+		{
+			Menu();
+			break;
+		}
+		else	// invalid input
+		{
+			LCD_Invalidinput();
+			_delay_ms(1000);
+		}
+	} 
 	
 	return;
 }

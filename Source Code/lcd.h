@@ -144,26 +144,48 @@ inline void LCD_SetTimeMenu()
 	LCD_String_xy(1,0,"#>BACK");
 }
 
-inline void LCD_AlarmList(Alarm *alarms) 
+inline void LCD_AlarmList1(Alarm *alarms) 
 {
-	const char *alarm1_str,*alarm2_str,*alarm3_str,*alarm0_str;
+	const char *alarm1_str,*alarm2_str,*next_str,*alarm0_str;
 	alarm0_str = alarms[0].getAlarmStr();
 	alarm1_str = alarms[1].getAlarmStr();
 	alarm2_str = alarms[2].getAlarmStr();
-	alarm3_str = alarms[3].getAlarmStr();
+	next_str = "Next";
 	LCD_Clear();
 	char alarm0[10]= "1>";
 	char alarm1[10]= "2>";
 	char alarm2[10]= "3>";
-	char alarm3[10]= "4>"; 
+	char next[10]= "*>"; 
 	strcat(alarm0,alarm0_str);
 	strcat(alarm1,alarm1_str);
 	strcat(alarm2,alarm2_str);
-	strcat(alarm3,alarm3_str);
+	strcat(next,next_str);
 	LCD_String_xy(0,0,alarm0);
 	LCD_String_xy(0,8,alarm1);
 	LCD_String_xy(1,0,alarm2);
-	LCD_String_xy(1,8,alarm3);
+	LCD_String_xy(1,8,next);
+}
+
+inline void LCD_AlarmList2(Alarm *alarms)
+{
+	const char *alarm4_str,*alarm5_str,*back_str,*alarm3_str;
+	alarm3_str = alarms[3].getAlarmStr();
+	alarm4_str = alarms[4].getAlarmStr();
+	alarm5_str = alarms[5].getAlarmStr();
+	back_str = "Back";
+	LCD_Clear();
+	char alarm3[10]= "4>";
+	char alarm4[10]= "5>";
+	char alarm5[10]= "6>";
+	char back[10]= "#>";
+	strcat(alarm3,alarm3_str);
+	strcat(alarm4,alarm4_str);
+	strcat(alarm5,alarm5_str);
+	strcat(back,back_str);
+	LCD_String_xy(0,0,alarm3);
+	LCD_String_xy(0,8,alarm4);
+	LCD_String_xy(1,0,alarm5);
+	LCD_String_xy(1,8,back);
 }
 
 inline void LCD_AlarmMenu()

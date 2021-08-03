@@ -25,6 +25,7 @@ inline int Keypad_read()
 		KEY_PRT = 0xFF;
 
 		do
+		
 		{
 			KEY_PRT &= 0x0F;      /* mask PORT for column read only */
 			asm("NOP");
