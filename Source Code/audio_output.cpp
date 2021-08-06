@@ -5,7 +5,7 @@ Tones::Tones()
 	 this->notes=harry_potter_notes;
 	 this->durations=harry_potter_notes_durations;
 	 this->length=harry_potter_notes_length;
-	 this->rate=32000;
+	 this->rate=4000;
 }
 	
 void Tones::play_note(float Note_frequency,float Note_duration)
